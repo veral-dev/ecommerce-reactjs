@@ -5,7 +5,7 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
+const User = require("../models/User.model");
 
 const bcryptSalt = 10;
 
@@ -20,11 +20,11 @@ mongoose
 
 let users = [
   {
-    username: "alice",
+    email: "alice",
     password: bcrypt.hashSync("alice", bcrypt.genSaltSync(bcryptSalt)),
   },
   {
-    username: "bob",
+    email: "bob",
     password: bcrypt.hashSync("bob", bcrypt.genSaltSync(bcryptSalt)),
   }
 ]

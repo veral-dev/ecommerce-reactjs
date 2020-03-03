@@ -12,6 +12,7 @@ const app = express();
 // Middleware Setup
 require('./configs/middleware.config')(app)
 // Express View engine setup
+require('./configs/session.config')(app)
 require('./configs/preformatter.config')(app)
 require('./configs/views.config')(app)
 require('./configs/locals.config')(app)
@@ -20,12 +21,13 @@ require('./configs/hbs.config')
 
 
 app.use(flash());
-require('./passport')(app);
-
 
 // Routes 
 app.use("/", require("./routes/index.routes"));
-app.use("/", require("./routes/auth.routes"));
+app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/products', require('./routes/products.routes'))
+app.use('/api/files', require('./routes/files.routes'))
+
 
 
 module.exports = app;
