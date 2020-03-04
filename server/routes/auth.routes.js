@@ -17,9 +17,9 @@ authRoutes.post('/signup', (req, res, next) => {
     res.status(400).json({ message: 'Provide email and password' });
     return;
   }
-
-  if (password.length < 7) {
-    res.status(400).json({ message: 'Please make your password at least 8 characters long for security purposes.' });
+  // TO-DO validación en backend
+  if (password.length < 6) {
+    res.status(400).json({ message: 'Please make your password at least 6 characters long for security purposes.' });
     return;
   }
 

@@ -26,6 +26,7 @@ app.use(flash());
 app.use("/", require("./routes/index.routes"));
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/products', require('./routes/products.routes'))
+app.use('/api/users', require('./routes/users.routes'))
 app.use('/api/files', require('./routes/files.routes'))
 
 

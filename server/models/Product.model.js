@@ -8,6 +8,7 @@ const userSchema = new Schema({
     images: { type: Array, default: "https://www.superherodb.com/pictures2/portraits/10/100/10255.jpg" },
     tags: { type: [String] },
     model: [{
+        id: Number,
         size: { type: String },
         stock: { type: Number, required: true },
         price: { type: Number }

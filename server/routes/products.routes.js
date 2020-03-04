@@ -1,26 +1,38 @@
 const express = require('express')
 const router = express.Router()
 
-const Coaster = require('../models/Product.model')
+const Product = require('../models/Product.model')
 
 router.get('/getAllProducts', (req, res, next) => {
-    Coaster.find()
+    Product.find()
         .then(allProducts => res.json(allProducts))
         .catch(err => console.log(err))
 })
 
 router.get('/getOneProduct/:id', (req, res, next) => {
-    Coaster.findById(req.params.id)
+    Product.findById(req.params.id)
         .then(theProduct => res.json(theProduct))
         .catch(err => console.log(err))
 })
 
 router.post('/new', (req, res, next) => {
-    Coaster.create(req.body)
+    Product.create(req.body)
         .then(theProduct => res.json(theProduct))
         .catch(err => console.log(err))
 })
 
+router.put('/update/:id', (req, res, next) => {
+    Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then(theProduct => res.json(theProduct))
+        .catch(err => console.log(err))
+
+})
+
+router.delete('/delete/:id', (req, res, next) => {
+    Product.findByIdAndDelete(req.params.id)
+        .then(() => res.json({ message: 'Producto borrado' }))
+        .catch(err => console.log(err))
+})
 
 
 module.exports = router

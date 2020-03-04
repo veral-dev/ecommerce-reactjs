@@ -17,6 +17,7 @@ const userSchema = new Schema({
   state: { type: String },
   phone: { type: Number },
   wishlist: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+  orders: Array,
 }, {
   timestamps: true
 })
