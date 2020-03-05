@@ -28,12 +28,6 @@ router.put('/update/:id', (req, res, next) => {
 
 })
 
-router.delete('/delete/:id', (req, res, next) => {
-    Product.findByIdAndDelete(req.params.id)
-        .then(() => res.json({ message: 'Producto borrado' }))
-        .catch(err => console.log(err))
-})
-
 router.post('/search', (req, res, next) => {
     const productSearch = req.body.search
     Product.find({
@@ -45,6 +39,12 @@ router.post('/search', (req, res, next) => {
         .then(response => { res.json(response) })
         .catch(err => next(err))
 
+})
+
+router.delete('/delete/:id', (req, res, next) => {
+    Product.findByIdAndDelete(req.params.id)
+        .then(() => res.json({ message: 'Producto borrado' }))
+        .catch(err => console.log(err))
 })
 
 module.exports = router
