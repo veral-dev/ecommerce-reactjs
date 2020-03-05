@@ -34,5 +34,18 @@ router.delete('/delete/:id', (req, res, next) => {
         .catch(err => console.log(err))
 })
 
+router.post('/search', (req, res, next) => {
+    console.log('-----------ROUTES--------', req.body)
+    const productSearch = req.body.search
+    Product.find({
+        "name": {
+            $regex: `.*${productSearch}.*`,
+            $options: 'i'
+        }
+    })
+        .then(response => { res.json(response) })
+        .catch(err => next(err))
+
+})
 
 module.exports = router
