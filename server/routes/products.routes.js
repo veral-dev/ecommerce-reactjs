@@ -35,7 +35,6 @@ router.delete('/delete/:id', (req, res, next) => {
 })
 
 router.post('/search', (req, res, next) => {
-    console.log('-----------ROUTES--------', req.body)
     const productSearch = req.body.search
     Product.find({
         "name": {

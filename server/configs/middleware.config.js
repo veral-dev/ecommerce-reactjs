@@ -1,12 +1,11 @@
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const favicon = require('serve-favicon');
 const hbs = require('hbs');
 const logger = require('morgan');
 const path = require('path');
 const express = require('express')
 const cors = require('cors')
-
+const flash = require("connect-flash");
 
 
 module.exports = app => {
@@ -24,7 +23,7 @@ module.exports = app => {
         sourceMap: true
     }));
 
-
+    app.use(flash());
 
     const whitelist = ['http://localhost:3000']
     const corsOptions = {
@@ -36,9 +35,7 @@ module.exports = app => {
     }
     app.use(cors(corsOptions))
 
-
     app.set('views', path.join(__dirname, '..', 'views'));
     app.set('view engine', 'hbs');
     app.use(express.static(path.join(__dirname, '..', 'public')));
-    // app.use(favicon(path.join(__dirname, '..', 'public', 'images', 'favicon.ico')));
 }
