@@ -12,7 +12,8 @@ class Signup extends Component {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errorMessage: ''
         }
         this.services = new AuthServices()
     }
@@ -34,6 +35,11 @@ class Signup extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
+        //Validación en front, TO-DO
+        // if (this.state.password.length < 6 || !this.state.email.match(/[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}/)) {
+        //     this.setState({ errorMessage: 'RELLENA LOS CAMPOS' })
+        //     return
+        // }
         this.postUser()
     }
 
@@ -49,15 +55,20 @@ class Signup extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="text" name="email" value={this.state.username} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleChange} />
+                        <Form.Control type="email" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
+                        <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
                     </Form.Group>
 
-                    <Button variant="dark" type="submit">Registrarse</Button>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control type="password" pattern=".{6,}" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleChange} />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicCheckbox">
+                        <Form.Check type="checkbox" label="Check me out" />
+                    </Form.Group>
+                    <Button variant="outline-dark" type="submit">Registrarse</Button>
                 </Form>
+                <p>{this.state.errorMessage}</p>
             </Container>
 
         )

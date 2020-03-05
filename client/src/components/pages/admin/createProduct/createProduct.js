@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import ProductForm from '../productForm/productForm'
+import Container from 'react-bootstrap/Container'
 
 
 class CreateProduct extends Component {
@@ -16,10 +17,12 @@ class CreateProduct extends Component {
     render() {
 
         return (
-            <>
-                <h1 className="text-center">Panel de creación de producto</h1>
-                <ProductForm />
-            </>
+            <div className="admin-body">
+                <Container>
+                    <h1 className="text-center">Panel de creación de producto</h1>
+                    <ProductForm />
+                </Container>
+            </div>
         )
     }
 }

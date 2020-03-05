@@ -13,18 +13,8 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  color: white;
-}
-
 .App-header a {
   color: inherit;
-}
-
-main{
-  margin-top: 40px;
 }
 
 @keyframes App-logo-spin {

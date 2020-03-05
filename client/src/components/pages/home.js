@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import ProductForm from './productForm/productForm'
+import ProductForm from './admin/productForm/productForm'
 
 
 import Container from 'react-bootstrap/Container'
@@ -36,7 +36,7 @@ class Home extends Component {
 
                 <h1>Bienvenido a Relakso</h1>
 
-                {this.props.loggedInUser && <Link as="button" className="mb-20 p-2 btn-dark" to="/products/create">Crear nuevo producto</Link>}
+                {this.props.loggedInUser && <Link as="button" className="mb-20 p-2 btn btn-info" to="/admin/products/create">Crear nuevo producto</Link>}
 
                 <Modal show={this.state.showmodal} onHide={this.closeModal}>
                     <Modal.Body>

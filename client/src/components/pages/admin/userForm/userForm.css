@@ -1,0 +1,33 @@
+.list-group-item{
+    background-color: inherit;
+}
+.create-product{
+    max-width: 600px;
+    margin: 0 auto;
+}
+.table{
+    margin: 30px auto;
+    color: inherit;
+    overflow-x: auto;
+}
+.table td{
+    vertical-align: middle;
+}
+.table-bordered{
+    border: none;
+}
+.table-bordered td, .table-bordered th{
+    border: none;
+}
+
+@media screen and (max-width: 540px){
+    .table{
+        font-size: 0.8rem;
+    }
+    .table td{
+        padding: 0.75rem 0.3rem;
+    }
+    .btn{
+        font-size: 0.8rem;
+    }
+}

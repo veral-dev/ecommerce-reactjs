@@ -26,7 +26,7 @@ class Navigation extends Component {
 
     render() {
 
-        const greeting = this.props.loggedInUser ? <>Hola, {this.props.loggedInUser.email}</> : <>Hola, invitad@</>
+        const greeting = this.props.loggedInUser ? <>Hola, {this.props.loggedInUser.name}</> : <>Hola, invitad@</>
 
 
         return (
@@ -41,9 +41,11 @@ class Navigation extends Component {
                             <Nav className="ml-auto">
                                 <Nav.Link as="div"> <Link to="/">Inicio</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/profile">Perfil</Link></Nav.Link>
+                                <Nav.Link as="div"> <Link to="/admin/products/create">Crear producto</Link></Nav.Link>
+                                <Nav.Link as="div"> <Link to="/admin/products/products-list">Lista de productos</Link></Nav.Link>
+                                <Nav.Link as="div"> <Link to="/admin/users/users-list">Lista de usuarios</Link></Nav.Link>
+                                <Nav.Link as="div"> <Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link>
                                 <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link>
-                                <Nav.Link as="div"> <Link to="/products/create">Crear producto</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/products/list">Lista de productos</Link></Nav.Link>
                                 <Nav.Link as="div">{greeting}</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>

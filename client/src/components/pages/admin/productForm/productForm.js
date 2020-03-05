@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import '../admin.css';
 import './productForm.css';
 
-import ProductsServices from '../../../services/product.services'
-import FilesServices from '../../../services/files.services'
+import ProductsServices from '../../../../services/product.services'
+import FilesServices from '../../../../services/files.services'
 
 
 import Form from 'react-bootstrap/Form'
@@ -107,7 +108,6 @@ class ProductForm extends Component {
         }
         this.filesServices.handleUpload(uploadData)
             .then(response => {
-                console.log('Subida de archivo finalizada! La URL de Cloudinary es: ', response)
                 this.setState({
                     product: { ...this.state.product, images: response.secure_url }
                 })
@@ -115,8 +115,7 @@ class ProductForm extends Component {
             .catch(err => console.log(err))
     }
 
-    closeModal = () => this.setState({ showmodal: false })
-    openModal = () => this.setState({ showmodal: true })
+    toggleModal = () => this.setState({ showmodal: !this.state.showmodal })
 
     render() {
         return (
@@ -143,12 +142,12 @@ class ProductForm extends Component {
                         <Form.Control type="file" name="images" onChange={this.handleFileUpload} multiple />
                         {this.state.product.images !== 0 ? this.state.product.images.map((elm, idx) => <img className="m-3" src={elm} key={idx} alt={idx} style={{ width: "50px" }} />) : 'No hay imágenes cargadas'}
                     </Form.Group>
-                    
-                    
+
+
                 </Form>
 
 
-                <Modal show={this.state.showmodal} onHide={this.closeModal}>
+                <Modal show={this.state.showmodal} onHide={this.toggleModal}>
                     <Modal.Body>
                         <Form onSubmit={this.handleSubmitVariant}>
                             <Form.Group>
@@ -168,8 +167,8 @@ class ProductForm extends Component {
                     </Modal.Body>
                 </Modal>
                 <h3>Variaciones</h3>
-                <Button className="mb-20" variant="outline-light" onClick={this.openModal}>Crear nueva variación</Button>
-                
+                <Button className="mb-20" variant="outline-light" onClick={this.toggleModal}>Crear nueva variación</Button>
+
                 <Table striped bordered>
                     <thead>
                         <tr>
