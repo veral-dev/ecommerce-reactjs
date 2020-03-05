@@ -38,7 +38,6 @@ class Home extends Component {
                         <h3>Nuevo producto</h3>
                         <hr></hr>
                         <ProductForm closeModal={this.closeModal} />
-                        {/* <CoasterForm closeModal={this.closeModal} refreshList={this.getAllCoasters} /> */}
                     </Modal.Body>
                 </Modal>
 

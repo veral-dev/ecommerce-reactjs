@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 /* ----STYLING----*/
 import '../admin.css';
+import './productList.css'
 
 /* ----SERVICES----*/
 import ProductsServices from '../../../../services/product.services'
@@ -15,10 +16,14 @@ import Table from 'react-bootstrap/Table'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
 // import Button from 'react-bootstrap/Button'
 // import Modal from 'react-bootstrap/Modal'
 
 class ProductsList extends Component {
+
 
     constructor(props) {
         super(props)
@@ -60,12 +65,17 @@ class ProductsList extends Component {
             <div className="admin-body">
                 <Container className="pb-5">
 
-                    <Row>
+                    <Row className="mb-3">
                         <Col sm={8}>
                             <h1>Listado de productos</h1>
                         </Col>
                         <Col sm={4}>
-                            {this.props.loggedInUser && <Link as="button" className="mb-20 p-2 btn btn-outline-warning" to="/admin/products/create">Crear nuevo producto</Link>}
+
+                            {this.props.loggedInUser && <Link className="float-right mobile-button" to="/admin/products/create">
+
+                                <Fab style={{ backgroundColor: '#4caf50' }} aria-label="add">
+                                    <AddIcon />
+                                </Fab></Link>}
                         </Col>
                     </Row>
                     <input className="form-control mr-sm-2" value={this.productsSearched} type="search" name="search" placeholder="Search" aria-label="Search"
@@ -73,7 +83,7 @@ class ProductsList extends Component {
 
                     {this.state.products.length ? (
 
-                        <Table striped bordered>
+                        <Table responsive striped bordered>
                             <thead>
                                 <tr>
                                     <th>Imagen</th>

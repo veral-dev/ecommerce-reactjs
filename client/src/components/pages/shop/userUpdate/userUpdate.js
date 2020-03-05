@@ -4,8 +4,7 @@ import React, { Component } from 'react'
 import '../shop.css'
 
 /* ----SERVICES----*/
-import ProductServices from '../../../../services/product.services'
-import FilesServices from '../../../../services/files.services'
+import UserServices from '../../../../services/user.services'
 
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
@@ -20,25 +19,23 @@ import Modal from 'react-bootstrap/Modal'
 
 
 
-class ProductUpdate extends Component {
-
+class UserUpdate extends Component {
     constructor(props) {
         super(props)
-        this.productServices = new ProductServices()
-        this.filesServices = new FilesServices()
+        this.userServices = new UserServices()
         this.state = {
-            product: {
+            user: {
+                email: '',
+                role: '',
                 name: '',
-                excerpt: '',
-                category: '',
-                tags: '',
-                images: [],
-                model: [],
-            },
-            variant: {
-                size: '',
-                stock: 0,
-                price: 0
+                lastName: '',
+                street: '',
+                zipCode: '',
+                city: '',
+                state: '',
+                phone: '',
+                wishlist: [],
+                orders: [],
             },
             modelPrev: [],
             showtoast: false,
@@ -47,115 +44,45 @@ class ProductUpdate extends Component {
     }
 
     componentDidMount = () => {
-        this.getProductDetails()
+        this.getUserDetails()
     }
 
-    getProductDetails = () => {
-        this.productServices.getProductDetails(this.props.match.params.id)
-            .then(theProduct => this.setState({ product: theProduct }))
-            .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
+    getUserDetails = () => {
+        this.userServices.getUserDetails(this.props.match.params.id)
+            .then(theUser => this.setState({ user: theUser }))
             .catch(err => console.log(err))
     }
 
-    updateProduct = () => {
-        this.productServices.updateProduct(this.props.match.params.id, this.state.product)
-            .then(theProduct => this.setState({ product: theProduct }))
+    updateUser = () => {
+        this.userServices.updateUser(this.props.match.params.id, this.state.user)
+            .then(theUser => this.setState({ user: theUser }))
             .catch(err => console.log(err))
     }
 
-    handleSubmit = async e => {
+    handleSubmit = e => {
         e.preventDefault()
-        await this.setVariants()
-        this.updateProduct()
+        this.updateUser()
         this.toggleToast()
     }
 
     handleChange = e => {
         let { name, value } = e.target
         this.setState({
-            product: { ...this.state.product, [name]: value }
-        })
-    }
-    handleFileUpload = e => {
-        const uploadData = new FormData()
-        for (let key in e.target.files) {
-            uploadData.append("images", e.target.files[key])
-        }
-        this.filesServices.handleUpload(uploadData)
-            .then(response => {
-                this.setState({
-                    product: { ...this.state.product, images: response.secure_url }
-                })
-            })
-            .catch(err => console.log(err))
-    }
-
-    handleChangeVariant = e => {
-        let { name, value } = e.target
-        this.setState({
-            variant: { ...this.state.variant, [name]: value }
+            user: { ...this.state.user, [name]: value }
         })
     }
 
-    handleUpdateVariant = e => {
-        let { dataset } = e.target
-        let id = dataset.id
-        let modelCopy = [...this.state.modelPrev]
-
-        const inputArray = document.getElementById(id).querySelectorAll('td input')
-        let obj = {}
-        inputArray.forEach(elm => obj[elm.name] = elm.value)
-
-        modelCopy.splice(id, 1, obj)
-        this.setState({
-            modelPrev: modelCopy,
-        })
-    }
-
-    setVariants = () => {
-        let modelCopy = [...this.state.modelPrev]
-        this.setState({
-            product: { ...this.state.product, model: modelCopy },
-        })
-
-    }
-
-    handleSubmitVariant = e => {
-        e.preventDefault()
-        let modelCopy = [...this.state.product.model]
-        modelCopy.push(this.state.variant)
-        this.setState({
-            product: { ...this.state.product, model: modelCopy },
-            variant: {
-                size: '',
-                stock: 0,
-                price: 0
-            },
-            showmodal: false,
-        })
-
-    }
-
-    deleteVariant = idx => {
-        let modelCopy = [...this.state.modelPrev]
-        modelCopy.splice(idx, 1)
-        this.setState({
-            modelPrev: modelCopy
-        })
-    }
+    // deleteVariant = idx => {
+    //     let modelCopy = [...this.state.modelPrev]
+    //     modelCopy.splice(idx, 1)
+    //     this.setState({
+    //         modelPrev: modelCopy
+    //     })
+    // }
 
     toggleToast = () => this.setState({ showtoast: !this.state.showtoast })
     toggleModal = () => this.setState({ showmodal: !this.state.showmodal })
 
-    mainImage = id => {
-        let imagesCopy = [...this.state.product.images]
-        let idx = id.idx
-        imagesCopy.unshift(imagesCopy.splice(idx, 1).toString())
-        this.setState({
-            product: { ...this.state.product, images: imagesCopy }
-        })
-
-    }
 
     render() {
 
@@ -241,11 +168,11 @@ class ProductUpdate extends Component {
 
                 <Toast onClose={() => this.toggleToast()} show={this.state.showtoast} delay={3000} autohide>
                     <Toast.Header>
-                        <strong className="mr-auto">El producto ha sido modificado</strong>
+                        <strong className="mr-auto">El usuario ha sido modificado correctamente</strong>
                     </Toast.Header>
                 </Toast>
                 <Button as="div" variant="dark" size="sm">
-                    <Link to="/admin/products/products-list">Volver al listado de productos</Link>
+                    <Link to="/">Volver a tu cuenta</Link>
                 </Button>
 
             </Container>
@@ -255,4 +182,4 @@ class ProductUpdate extends Component {
     }
 }
 
-export default ProductUpdate
+export default UserUpdate

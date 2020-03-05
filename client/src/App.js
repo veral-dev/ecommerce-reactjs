@@ -17,6 +17,7 @@ import CreateProduct from './components/pages/admin/createProduct/createProduct'
 import ProductsList from './components/pages/admin/productList/productList'
 import UsersList from './components/pages/admin/userList/userList'
 import CreateUser from './components/pages/admin/createUser/createUser'
+import UserUpdate from './components/pages/shop/userUpdate/userUpdate'
 import ProductDetails from './components/pages/shop/productDetails/productDetails';
 
 
@@ -57,6 +58,7 @@ class App extends Component {
             <Route path="/products/:id" render={props => <ProductDetails {...props} />} />
             <Route path="/admin/users/users-list" render={() => this.state.loggedInUser ? <UsersList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
             <Route path="/admin/users/create-user" render={() => this.state.loggedInUser ? <CreateUser loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/cuenta/editar" render={() => this.state.loggedInUser ? <UserUpdate loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
           </Switch>
         </main>
       </div>

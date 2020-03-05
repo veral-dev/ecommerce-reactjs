@@ -15,5 +15,4 @@ export default class Services {
     updateProduct = (id, product) => this.service.put(`/update/${id}`, product).then(response => response.data)
     deleteProduct = (id) => this.service.delete(`/delete/${id}`).then(response => response.data)
     searchProduct = (search) => this.service.post(`/search`, { search }).then(response => response.data)
-    //TO-DO poner los catch
 }

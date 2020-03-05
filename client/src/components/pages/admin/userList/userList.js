@@ -52,7 +52,7 @@ class UserList extends Component {
                             <h1>Listado de usuarios</h1>
                         </Col>
                         <Col sm={4}>
-                            {this.props.loggedInUser && <Link as="button" className="mb-20 p-2 btn btn-outline-warning" to="/admin/users/create">Crear nuevo usuario</Link>}
+                            {this.props.loggedInUser && <Link as="button" className="mb-20 p-2 btn btn-outline-warning btn-block" to="/admin/users/create">Crear nuevo usuario</Link>}
                         </Col>
                     </Row>
 
@@ -61,7 +61,7 @@ class UserList extends Component {
 
                     {this.state.users.length ? (
 
-                        <Table striped bordered>
+                        <Table responsive striped bordered>
                             <thead>
                                 <tr>
                                     <th>Email</th>

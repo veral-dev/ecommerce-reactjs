@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import Button from 'react-bootstrap/Button'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import EditIcon from '@material-ui/icons/Edit';
 
 const ProductCard = ({ name, images, excerpt, category, tags, model, _id, deleteProduct }) => {
 
@@ -13,8 +15,10 @@ const ProductCard = ({ name, images, excerpt, category, tags, model, _id, delete
             <td><img src={images[0]} alt={name} style={{ width: "50px" }} /></td>
             <td>{name}</td>
             <td>{category}</td>
-            <td><Link as="button" className="mb-20 p-2 btn btn-outline-success" to={`/products/${_id}`}>Modificar</Link></td>
-            <td><Button variant="outline-danger" className="mb-20 p-2" onClick={deleteProduct}>Borrar</Button></td>
+            <td className="d-flex">
+                <Link as="button" className="p-2 my-2 btn btn-outline-info" to={`/products/${_id}`}><EditIcon fontSize="small" /></Link>
+                <Button variant="outline-danger" className="ml-4 m-2 p-2" onClick={deleteProduct}><DeleteForeverIcon fontSize="small" /></Button>
+            </td>
         </tr>
     );
 }

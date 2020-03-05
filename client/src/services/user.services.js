@@ -11,5 +11,8 @@ export default class Services {
 
     getAllUsers = () => this.service.get('/getAllUsers').then(response => response.data)
     getUserDetails = id => this.service.get(`/getOneUser/${id}`).then(response => response.data)
-    postUser = product => this.service.post(`/new`, product).then(response => response.data)
+    postUser = user => this.service.post(`/new`, user).then(response => response.data)
+    updateUser = (id, user) => this.service.put(`/update/${id}`, user).then(response => response.data)
+    deleteUser = (id) => this.service.delete(`/delete/${id}`).then(response => response.data)
+    searchUser = (search) => this.service.post(`/search`, { search }).then(response => response.data)
 }

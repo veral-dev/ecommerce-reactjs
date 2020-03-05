@@ -45,6 +45,7 @@ class Navigation extends Component {
                                 <Nav.Link as="div"> <Link to="/admin/products/products-list">Lista de productos</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/admin/users/users-list">Lista de usuarios</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link>
+                                <Nav.Link as="div"> <Link to="/cuenta/editar">Editar mi cuenta</Link></Nav.Link>
                                 <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link>
                                 <Nav.Link as="div">{greeting}</Nav.Link>
                             </Nav>
