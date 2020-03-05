@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+
+/* ----STYLING----*/
 import '../admin.css';
 import './productForm.css';
 
+/* ----SERVICES----*/
 import ProductsServices from '../../../../services/product.services'
 import FilesServices from '../../../../services/files.services'
 
-
+/* ----STYLE COMPONENTS----*/
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -27,8 +30,6 @@ class ProductForm extends Component {
                 tags: '',
                 images: [],
                 model: [],
-
-
             },
             variant: {
                 size: '',
@@ -90,7 +91,6 @@ class ProductForm extends Component {
             },
             showmodal: false,
         })
-
     }
 
     deleteVariant = idx => {

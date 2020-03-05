@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+/* ----STYLE COMPONENTS----*/
 import ProductForm from '../productForm/productForm'
 import Container from 'react-bootstrap/Container'
 

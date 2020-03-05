@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 
+/* ----SERVICES----*/
+import AuthServices from '../../../../services/auth.services'
+
+/* ----STYLE COMPONENTS----*/
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
-import AuthServices from '../../../../services/auth.services'
 
 class Signup extends Component {
 
@@ -15,7 +18,7 @@ class Signup extends Component {
             password: '',
             errorMessage: ''
         }
-        this.services = new AuthServices()
+        this.authServices = new AuthServices()
     }
 
 
@@ -25,7 +28,7 @@ class Signup extends Component {
     }
 
     postUser = () => {
-        this.services.signup(this.state)
+        this.authServices.signup(this.state)
             .then(theLoggedNewUser => {
                 this.setState({ email: '', password: '' })
                 this.props.setTheUser(theLoggedNewUser)

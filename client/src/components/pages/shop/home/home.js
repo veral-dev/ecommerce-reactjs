@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 
-import ProductForm from './admin/productForm/productForm'
+/* ----COMPONENTS----*/
+import ProductForm from '../../admin/productForm/productForm'
 
+/* ----ROUTES----*/
+import { Link } from 'react-router-dom'
 
+/* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
 import Modal from 'react-bootstrap/Modal'
-import { Link } from 'react-router-dom'
 
 
 class Home extends Component {
@@ -17,14 +20,6 @@ class Home extends Component {
             showmodal: false
         }
     }
-
-    // componentDidMount = () => this.getAllCoasters()
-
-    // getAllCoasters = () => {
-    //     this.services.getAllCoasters()
-    //         .then(allCoasters => this.setState({ coasters: allCoasters }))
-    //         .catch(err => console.log(err))
-    // }
 
     closeModal = () => this.setState({ showmodal: false })
     openModal = () => this.setState({ showmodal: true })

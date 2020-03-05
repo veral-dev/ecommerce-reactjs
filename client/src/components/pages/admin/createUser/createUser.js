@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+/* ----STYLE COMPONENTS----*/
 import UserForm from '../userForm/userForm'
 import Container from 'react-bootstrap/Container'
 

@@ -1,17 +1,7 @@
 import React from 'react'
 
-
-
+/* ----ROUTES----*/
 import { Link } from 'react-router-dom'
-
-
-// deleteVariant = idx => {
-//     let modelCopy = [...this.state.product.model]
-//     modelCopy.splice(idx, 1)
-//     this.setState({
-//         product: { ...this.state.product, model: modelCopy }
-//     })
-// }
 
 const UserCard = ({ email, name, city, phone, role, _id }) => {
     return (

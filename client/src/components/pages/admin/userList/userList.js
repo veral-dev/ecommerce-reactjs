@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
+
+/* ----STYLING----*/
 import '../admin.css';
 
+/* ----SERVICES----*/
 import ProductsServices from '../../../../services/user.services'
 
+/* ----COMPONENTS----*/
 import UserCard from './userCardList'
+
+/* ----ROUTES----*/
 import { Link } from 'react-router-dom'
+
+/* ----STYLE COMPONENTS----*/
 import Table from 'react-bootstrap/Table'
-
-
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-// import Button from 'react-bootstrap/Button'
-// import Modal from 'react-bootstrap/Modal'
+
 
 class UserList extends Component {
 
@@ -23,13 +27,13 @@ class UserList extends Component {
             users: [],
             showmodal: false
         }
-        this.services = new ProductsServices()
+        this.productServices = new ProductsServices()
     }
 
     componentDidMount = () => this.getAllUsers()
 
     getAllUsers = () => {
-        this.services.getAllUsers()
+        this.productServices.getAllUsers()
             .then(allUsers => this.setState({ users: allUsers }))
             .catch(err => console.log(err))
     }

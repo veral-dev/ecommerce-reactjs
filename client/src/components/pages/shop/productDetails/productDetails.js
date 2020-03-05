@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
+
+/* ----STYLING----*/
 import '../shop.css'
+
+/* ----SERVICES----*/
 import ProductServices from '../../../../services/product.services'
 import FilesServices from '../../../../services/files.services'
 
+/* ----ROUTES----*/
+import { Link } from 'react-router-dom'
 
+/* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { Link } from 'react-router-dom'
 import Toast from 'react-bootstrap/Toast'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
@@ -18,7 +24,7 @@ class ProductUpdate extends Component {
 
     constructor(props) {
         super(props)
-        this.services = new ProductServices()
+        this.productServices = new ProductServices()
         this.filesServices = new FilesServices()
         this.state = {
             product: {
@@ -44,13 +50,13 @@ class ProductUpdate extends Component {
     }
 
     getProductDetails = () => {
-        this.services.getProductDetails(this.props.match.params.id)
+        this.productServices.getProductDetails(this.props.match.params.id)
             .then(theProduct => this.setState({ product: theProduct }))
             .catch(err => console.log(err))
     }
 
     updateProduct = () => {
-        this.services.updateProduct(this.props.match.params.id, this.state.product)
+        this.productServices.updateProduct(this.props.match.params.id, this.state.product)
             .then(theProduct => this.setState({ product: theProduct }))
             .catch(err => console.log(err))
     }

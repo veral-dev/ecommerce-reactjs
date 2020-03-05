@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
+
+/* ----STYLING----*/
 import '../admin.css';
 
+/* ----SERVICES----*/
 import ProductsServices from '../../../../services/product.services'
 
-import ProductCard from './productCardList'
+/* ----ROUTES----*/
 import { Link } from 'react-router-dom'
+
+/* ----STYLE COMPONENTS----*/
+import ProductCard from './productCardList'
 import Table from 'react-bootstrap/Table'
-
-
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -23,25 +26,25 @@ class ProductsList extends Component {
             products: [],
             showmodal: false,
         }
-        this.services = new ProductsServices()
+        this.productServices = new ProductsServices()
     }
 
     componentDidMount = () => this.getAllProducts()
 
     getAllProducts = () => {
-        this.services.getAllProducts()
+        this.productServices.getAllProducts()
             .then(allProducts => this.setState({ products: allProducts }))
             .catch(err => console.log(err))
     }
 
     deleteProduct = (id) => {
-        this.services.deleteProduct(id)
+        this.productServices.deleteProduct(id)
             .then(() => this.getAllProducts())
             .catch(err => console.log(err))
     }
 
     searchProduct = (value) => {
-        this.services.searchProduct(value)
+        this.productServices.searchProduct(value)
             .then(allProducts => this.setState({ products: allProducts }))
             .catch(err => console.log(err))
     }
@@ -86,7 +89,7 @@ class ProductsList extends Component {
 
                     )
                         :
-                        <p>CARGANDO...</p>
+                        <p>No hay resultados...</p>
 
                     }
 

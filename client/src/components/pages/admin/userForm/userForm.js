@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
+
+/* ----STYLING----*/
 import '../admin.css';
 import './userForm.css';
 
+/* ----SERVICES----*/
 import UserServices from '../../../../services/user.services'
 
-
+/* ----STYLE COMPONENTS----*/
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-// import Modal from 'react-bootstrap/Modal'
-// import Table from 'react-bootstrap/Table'
-
 
 
 class UserForm extends Component {
