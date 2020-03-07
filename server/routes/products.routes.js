@@ -16,6 +16,9 @@ router.get('/getOneProduct/:id', (req, res, next) => {
 })
 
 router.post('/new', (req, res, next) => {
+    // const product = req.body
+    // product.minPrice = req.body.models[0].price
+    // Como añadirlo a req.body
     Product.create(req.body)
         .then(theProduct => res.json(theProduct))
         .catch(err => console.log(err))

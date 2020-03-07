@@ -7,6 +7,7 @@ const userSchema = new Schema({
   password: { type: String, required: true, },
   role: {
     type: String,
+    default: 'client',
     enum: ['admin', 'client']
   },
   name: { type: String },
@@ -17,7 +18,7 @@ const userSchema = new Schema({
   state: { type: String },
   phone: { type: Number },
   wishlist: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
-  orders: Array,
+  cart: { type: Schema.Types.ObjectId, ref: 'Cart' },
 }, {
   timestamps: true
 })
