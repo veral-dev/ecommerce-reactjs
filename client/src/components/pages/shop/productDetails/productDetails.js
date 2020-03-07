@@ -58,6 +58,8 @@ class ProductUpdate extends Component {
 
     componentDidMount = () => {
         this.getProductDetails()
+        if (this.props.userCart.length === 0) this.postCart()
+
     }
 
     componentDidUpdate(prevProps) {
@@ -76,21 +78,25 @@ class ProductUpdate extends Component {
     /*----ADD TO CART----*/
     addToCart = () => {
 
-        if (this.props.userCart.length === 0) this.postCart()
         let cartCopy = { ...this.state.cart }
-        cartCopy.total = 0
-
-        cartCopy.products.forEach((elm, idx) => {
-            if (elm.model.includes(this.state.choosedProduct.model)) { elm.quantity += this.state.choosedProduct.quantity }
-            else { cartCopy.products.push(this.state.choosedProduct) };
-
-            cartCopy.total += elm.price * elm.quantity;
-        })
-
+        if (cartCopy.total === 0) {
+            cartCopy.products.push(this.state.choosedProduct)
+            cartCopy.total = this.state.choosedProduct.price * this.state.choosedProduct.quantity;
+        }
+        else {
+            cartCopy.total = 0
+            cartCopy.products.forEach((elm, idx) => {
+                if (elm.model.includes(this.state.choosedProduct.model)) {
+                    elm.quantity += this.state.choosedProduct.quantity
+                }
+                else {
+                    cartCopy.products.push(this.state.choosedProduct)
+                };
+                cartCopy.total += elm.price * elm.quantity;
+            })
+        }
         // cartCopy.products.push(this.state.choosedProduct)
         // cartCopy.products.forEach(elm => cartCopy.total += elm.price)
-        console.log('CartCopy', cartCopy)
-
         // cartCopy.total = 0
         // cartCopy.products.forEach((elm, idx) => {
         //     if (elm.model.includes(this.state.choosedProduct.model)) { elm.quantity += this.state.choosedProduct.quantity }
@@ -108,7 +114,6 @@ class ProductUpdate extends Component {
     }
 
     postCart = () => {
-        console.log('Entrando en postCart')
         this.cartServices.postCart(this.state.cart)
             .then(theCart => this.setState({ cart: { ...this.state.cart, _id: theCart._id } }))
             .then(() => this.props.loggedInUser ? this.updateUser() : localStorage.setItem('cart', this.state.cart._id))

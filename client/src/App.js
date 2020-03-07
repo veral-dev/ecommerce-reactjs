@@ -63,7 +63,7 @@ class App extends Component {
 
     return (
       <div className="App-header">
-        <NavBar setTheUser={this.setTheUser} loggedInUser={this.state.loggedInUser} />
+        <NavBar setTheUser={this.setTheUser} loggedInUser={this.state.loggedInUser} userCart={this.state.userCart} />
         <main>
           <Switch>
             <Route exact path="/" render={() => <Home loggedInUser={this.state.loggedInUser} />} />
