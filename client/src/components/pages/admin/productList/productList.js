@@ -54,7 +54,7 @@ class ProductsList extends Component {
             .catch(err => console.log(err))
     }
 
-    handleChangeVariant = e => {
+    handleChangeSearch = e => {
         let { value } = e.target
         this.searchProduct(value)
     }
@@ -79,7 +79,7 @@ class ProductsList extends Component {
                         </Col>
                     </Row>
                     <input className="form-control mr-sm-2" value={this.productsSearched} type="search" name="search" placeholder="Search" aria-label="Search"
-                        id="index-input" onChange={this.handleChangeVariant} />
+                        id="index-input" onChange={this.handleChangeSearch} />
 
                     {this.state.products.length ? (
 

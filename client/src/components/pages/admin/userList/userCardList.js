@@ -11,7 +11,7 @@ const UserCard = ({ email, name, city, phone, role, _id }) => {
             <td>{city}</td>
             <td>{phone}</td>
             <td>{role}</td>
-            <td><Link as="button" className="mb-20 p-2 btn btn-outline-success" to="/">Modificar</Link></td>
+            <td><Link as="button" className="mb-20 p-2 btn btn-outline-success" to={`/cuenta/editar/${_id}`}>Modificar</Link></td>
         </tr>
     );
 }

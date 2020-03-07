@@ -7,15 +7,16 @@ import '../shop.css'
 import UserServices from '../../../../services/user.services'
 
 /* ----ROUTES----*/
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Toast from 'react-bootstrap/Toast'
-import Table from 'react-bootstrap/Table'
-import Modal from 'react-bootstrap/Modal'
+// import Form from 'react-bootstrap/Form'
+// import Toast from 'react-bootstrap/Toast'
+// import Table from 'react-bootstrap/Table'
+// import Modal from 'react-bootstrap/Modal'
+import TextField from '@material-ui/core/TextField';
 
 
 
@@ -48,13 +49,13 @@ class UserUpdate extends Component {
     }
 
     getUserDetails = () => {
-        this.userServices.getUserDetails(this.props.match.params.id)
+        this.userServices.getUserDetails(this.props.loggedInUser._id)
             .then(theUser => this.setState({ user: theUser }))
             .catch(err => console.log(err))
     }
 
     updateUser = () => {
-        this.userServices.updateUser(this.props.match.params.id, this.state.user)
+        this.userServices.updateUser(this.props.loggedInUser._id, this.state.user)
             .then(theUser => this.setState({ user: theUser }))
             .catch(err => console.log(err))
     }
@@ -88,7 +89,17 @@ class UserUpdate extends Component {
 
         return (
             <Container className="client-body">
-                <h1>{this.state.product.name}</h1>
+
+                <form onSubmit={this.handleSubmit} autoComplete="off">
+                    <TextField className="mx-4" id="standard-basic" value={this.state.user.name} label="Nombre" type="text" name="name" onChange={this.handleChange} />
+                    <TextField className="mx-4" id="standard-basic" value={this.state.user.lastName} label="Apellidos" type="text" name="lastName" onChange={this.handleChange} />
+                    <TextField className="mx-4" id="standard-basic" value={this.state.user.role} label="Rol" type="text" name="role" onChange={this.handleChange} />
+                    <TextField className="mx-4" id="standard-basic" value={this.state.user.city} label="Ciudad" type="text" name="city" onChange={this.handleChange} />
+
+                </form>
+                <Button variant="outline-success" type="submit" size="lg" block onClick={this.handleSubmit}>Modificar usuario</Button>
+
+                {/* <h1>{this.state.product.name}</h1>
 
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group>
@@ -173,7 +184,7 @@ class UserUpdate extends Component {
                 </Toast>
                 <Button as="div" variant="dark" size="sm">
                     <Link to="/">Volver a tu cuenta</Link>
-                </Button>
+                </Button> */}
 
             </Container>
 

@@ -5,7 +5,9 @@ import '../shop.css'
 
 /* ----SERVICES----*/
 import ProductServices from '../../../../services/product.services'
+import UserServices from '../../../../services/user.services'
 import FilesServices from '../../../../services/files.services'
+import CartServices from '../../../../services/cart.services'
 
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
@@ -25,7 +27,10 @@ class ProductUpdate extends Component {
     constructor(props) {
         super(props)
         this.productServices = new ProductServices()
+        this.userServices = new UserServices()
         this.filesServices = new FilesServices()
+        this.cartServices = new CartServices()
+
         this.state = {
             product: {
                 name: '',
@@ -40,7 +45,12 @@ class ProductUpdate extends Component {
                 stock: 0,
                 price: 0
             },
+            user: {
+
+            },
+            cart: { _id: undefined, products: [] },
             modelPrev: [],
+            choosedProduct: { product: '', model: '', quantity: 1 },
             showtoast: false,
             showmodal: false,
         }
@@ -50,13 +60,80 @@ class ProductUpdate extends Component {
         this.getProductDetails()
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.loggedInUser._id !== this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
+        if (prevProps.userCart._id !== this.props.userCart._id) this.setState({ cart: this.props.userCart })
+    }
+
+
+    /*----LOAD PRODUCTS----*/
     getProductDetails = () => {
         this.productServices.getProductDetails(this.props.match.params.id)
             .then(theProduct => this.setState({ product: theProduct }))
             .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
             .catch(err => console.log(err))
     }
+    /*----ADD TO CART----*/
+    addToCart = () => {
 
+        if (this.props.userCart.length === 0) this.postCart()
+        let cartCopy = { ...this.state.cart }
+        cartCopy.total = 0
+
+        cartCopy.products.forEach((elm, idx) => {
+            if (elm.model.includes(this.state.choosedProduct.model)) { elm.quantity += this.state.choosedProduct.quantity }
+            else { cartCopy.products.push(this.state.choosedProduct) };
+
+            cartCopy.total += elm.price * elm.quantity;
+        })
+
+        // cartCopy.products.push(this.state.choosedProduct)
+        // cartCopy.products.forEach(elm => cartCopy.total += elm.price)
+        console.log('CartCopy', cartCopy)
+
+        // cartCopy.total = 0
+        // cartCopy.products.forEach((elm, idx) => {
+        //     if (elm.model.includes(this.state.choosedProduct.model)) { elm.quantity += this.state.choosedProduct.quantity }
+        //     else { cartCopy.products.push(this.state.choosedProduct) };
+
+        //     cartCopy.total += elm.price * elm.quantity;
+        // })
+
+        this.setState({
+            cart: cartCopy
+        }, () => {
+            this.updateCart()
+            this.props.setTheCart(this.state.cart)
+        })
+    }
+
+    postCart = () => {
+        console.log('Entrando en postCart')
+        this.cartServices.postCart(this.state.cart)
+            .then(theCart => this.setState({ cart: { ...this.state.cart, _id: theCart._id } }))
+            .then(() => this.props.loggedInUser ? this.updateUser() : localStorage.setItem('cart', this.state.cart._id))
+            .catch(err => console.log(err))
+    }
+
+    updateCart = () => {
+        this.cartServices.updateCart(this.state.cart._id, this.state.cart)
+            .catch(err => console.log(err))
+    }
+
+    updateUser = () => {
+        let userCopy = this.state.user
+        userCopy.cart = this.state.cart
+        this.userServices.updateUser(this.props.loggedInUser._id, this.state.user)
+            .then(theUser => this.setState({ user: theUser }))
+            .catch(err => console.log(err))
+    }
+
+    chooseProduct = (idx, price) => {
+        let choosedProductCopy = { product: this.state.product._id, model: idx, price: price, quantity: 1 }
+        this.setState({ choosedProduct: choosedProductCopy }, () => console.log(this.state.choosedProduct))
+    }
+
+    /*----EDIT PRODUCT----*/
     updateProduct = () => {
         this.productServices.updateProduct(this.props.match.params.id, this.state.product)
             .then(theProduct => this.setState({ product: theProduct }))
@@ -75,19 +152,6 @@ class ProductUpdate extends Component {
         this.setState({
             product: { ...this.state.product, [name]: value }
         })
-    }
-    handleFileUpload = e => {
-        const uploadData = new FormData()
-        for (let key in e.target.files) {
-            uploadData.append("images", e.target.files[key])
-        }
-        this.filesServices.handleUpload(uploadData)
-            .then(response => {
-                this.setState({
-                    product: { ...this.state.product, images: response.secure_url }
-                })
-            })
-            .catch(err => console.log(err))
     }
 
     handleChangeVariant = e => {
@@ -112,26 +176,27 @@ class ProductUpdate extends Component {
         })
     }
 
-    setVariants = () => {
-        let modelCopy = [...this.state.modelPrev]
-        this.setState({
-            product: { ...this.state.product, model: modelCopy },
-        })
-
-    }
-
     handleSubmitVariant = e => {
         e.preventDefault()
         let modelCopy = [...this.state.product.model]
         modelCopy.push(this.state.variant)
         this.setState({
-            product: { ...this.state.product, model: modelCopy },
+            modelPrev: modelCopy,
             variant: {
                 size: '',
                 stock: 0,
                 price: 0
             },
             showmodal: false,
+        })
+
+    }
+
+    setVariants = () => {
+        console.log(this.state)
+        let modelCopy = [...this.state.modelPrev]
+        this.setState({
+            product: { ...this.state.product, model: modelCopy },
         })
 
     }
@@ -143,6 +208,23 @@ class ProductUpdate extends Component {
             modelPrev: modelCopy
         })
     }
+
+    handleFileUpload = e => {
+        const uploadData = new FormData()
+        for (let key in e.target.files) {
+            uploadData.append("images", e.target.files[key])
+        }
+        this.filesServices.handleUpload(uploadData)
+            .then(response => {
+                this.setState({
+                    product: { ...this.state.product, images: response.secure_url }
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
+
+
 
     toggleToast = () => this.setState({ showtoast: !this.state.showtoast })
     toggleModal = () => this.setState({ showmodal: !this.state.showmodal })
@@ -201,7 +283,7 @@ class ProductUpdate extends Component {
                                 <Form.Label>Stock</Form.Label>
                                 <Form.Control type="number" name="stock" value={this.state.variant.stock} onChange={this.handleChangeVariant} />
                             </Form.Group>
-                            <Button variant="dark" type="submit" onSubmit={this.handleSubmitVariant}>Añadir nueva variante al producto</Button>
+                            <Button variant="dark" type="submit">Añadir nueva variante al producto</Button>
                         </Form>
                     </Modal.Body>
                 </Modal>
@@ -223,9 +305,12 @@ class ProductUpdate extends Component {
                             <tr id={idx} key={idx}>
                                 <td>{idx + 1}</td>
                                 <td><input type="text" name="size" data-id={idx} value={elm.size} onChange={this.handleUpdateVariant} /></td>
-                                <td><input type="text" name="stock" data-id={idx} value={elm.stock} onChange={this.handleUpdateVariant} /></td>
-                                <td><input type="text" name="price" data-id={idx} value={elm.price} onChange={this.handleUpdateVariant} /></td>
+                                <td><input type="number" name="stock" data-id={idx} value={elm.stock} onChange={this.handleUpdateVariant} /></td>
+                                <td><input type="number" name="price" data-id={idx} value={elm.price} onChange={this.handleUpdateVariant} /></td>
+                                <td><input type="number" name="quantity" data-id={idx} value={elm.price} onChange={this.handleUpdateVariant} /></td>
                                 <td><Button className="mb-20" variant="outline-danger" onClick={() => this.deleteVariant(idx)}>Borrar</Button></td>
+                                <td><Button className="mb-20" variant="outline-warning" onClick={() => this.chooseProduct(elm._id, elm.price)}>Elegir</Button></td>
+
                             </tr>
                         )}
                     </tbody>
@@ -247,6 +332,9 @@ class ProductUpdate extends Component {
                 <Button as="div" variant="dark" size="sm">
                     <Link to="/admin/products/products-list">Volver al listado de productos</Link>
                 </Button>
+
+
+                <Button className="my-3 float-right" variant="warning" size="medium" onClick={() => this.addToCart(this.state.product._id)}>Comprar producto</Button>
 
             </Container>
 
