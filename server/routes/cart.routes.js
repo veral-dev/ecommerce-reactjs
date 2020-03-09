@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const Cart = require('../models/Cart.model')
+const Product = require('../models/Product.model')
+
 
 router.get('/getAllCarts', (req, res, next) => {
     Cart.find()
@@ -11,7 +13,17 @@ router.get('/getAllCarts', (req, res, next) => {
 
 router.get('/getUserCart/:cartId', (req, res, next) => {
     Cart.findById(req.params.cartId)
-        .then(theCart => res.json(theCart))
+        // .populate({
+        //     path: 'products.product',
+        //     populate: {
+        //         path: 'product',
+        //         model: 'Product'
+        //     }
+        // })
+        .then(theCart => {
+            console.log(theCart)
+            res.json(theCart)
+        })
         .catch(err => console.log(err))
 })
 
@@ -35,7 +47,9 @@ router.post('/search', (req, res, next) => {
 })
 
 router.put('/update/:id', (req, res, next) => {
+    console.log(req.body)
     Cart.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then(theCart => console.log('afterbody', theCart))
         .then(theCart => res.json(theCart))
         .catch(err => console.log(err))
 
@@ -46,5 +60,7 @@ router.delete('/delete/:id', (req, res, next) => {
         .then(() => res.json({ message: 'Carrito borrado' }))
         .catch(err => console.log(err))
 })
+
+
 
 module.exports = router

@@ -11,10 +11,10 @@ const cartSchema = new Schema({
         modelSize: { type: String },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
-        subtotal: { type: Number }
+        subtotal: { type: Number },
     }],
     total: { type: Number, default: 0 },
-
+    cartIconQuantity: { type: Number },
 }, {
     timestamps: true
 })
