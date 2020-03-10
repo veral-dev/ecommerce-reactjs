@@ -16,7 +16,7 @@ class UserForm extends Component {
 
     constructor(props) {
         super(props)
-        this.Userervices = new UserServices()
+        this.UserServices = new UserServices()
         this.state = {
             user: {
                 name: '',
@@ -62,7 +62,7 @@ class UserForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        this.postProduct()
+        this.postUser()
     }
 
     // deleteVariant = idx => {

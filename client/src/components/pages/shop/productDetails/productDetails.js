@@ -12,6 +12,9 @@ import CartServices from '../../../../services/cart.services'
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
 
+import Breadcrumbs from '../../../ui/Breadcrumbs'
+
+
 /* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
@@ -19,8 +22,10 @@ import Form from 'react-bootstrap/Form'
 import Toast from 'react-bootstrap/Toast'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
-
-
+/* ----ICONS---- */
+import IconButton from '@material-ui/core/IconButton';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 class ProductUpdate extends Component {
 
@@ -48,9 +53,9 @@ class ProductUpdate extends Component {
             user: {
 
             },
-            cart: { _id: undefined, products: [] },
+            cart: { _id: undefined, products: [], cartIconQuantity: 0 },
             modelPrev: [],
-            choosedProduct: { product: '', model: '', quantity: 1 },
+            choosedProduct: { product: '', model: '', price: 0, quantity: 1 },
             showtoast: false,
             showmodal: false,
         }
@@ -58,8 +63,7 @@ class ProductUpdate extends Component {
 
     componentDidMount = () => {
         this.getProductDetails()
-        if (this.props.userCart.length === 0) this.postCart()
-
+        this.setState({ cart: this.props.userCart })
     }
 
     componentDidUpdate(prevProps) {
@@ -81,47 +85,32 @@ class ProductUpdate extends Component {
         let cartCopy = { ...this.state.cart }
         if (cartCopy.total === 0) {
             cartCopy.products.push(this.state.choosedProduct)
-            cartCopy.total = this.state.choosedProduct.price * this.state.choosedProduct.quantity;
         }
         else {
-            cartCopy.total = 0
-            cartCopy.products.forEach((elm, idx) => {
-                if (elm.model.includes(this.state.choosedProduct.model)) {
-                    elm.quantity += this.state.choosedProduct.quantity
-                }
-                else {
-                    cartCopy.products.push(this.state.choosedProduct)
-                };
-                cartCopy.total += elm.price * elm.quantity;
-            })
+            let arr = []
+            cartCopy.products.forEach(elm => arr.push(elm.model))
+            if (arr.includes(this.state.choosedProduct.model)) {
+                let idx = arr.indexOf(this.state.choosedProduct.model)
+                cartCopy.products[idx].quantity += this.state.choosedProduct.quantity
+                cartCopy.products[idx].subtotal = cartCopy.products[idx].quantity * cartCopy.products[idx].price
+            } else {
+                cartCopy.products.push(this.state.choosedProduct)
+            }
         }
-        // cartCopy.products.push(this.state.choosedProduct)
-        // cartCopy.products.forEach(elm => cartCopy.total += elm.price)
-        // cartCopy.total = 0
-        // cartCopy.products.forEach((elm, idx) => {
-        //     if (elm.model.includes(this.state.choosedProduct.model)) { elm.quantity += this.state.choosedProduct.quantity }
-        //     else { cartCopy.products.push(this.state.choosedProduct) };
 
-        //     cartCopy.total += elm.price * elm.quantity;
-        // })
-
-        this.setState({
-            cart: cartCopy
-        }, () => {
-            this.updateCart()
-            this.props.setTheCart(this.state.cart)
-        })
+        let actualQuantity = 0
+        cartCopy.total = 0
+        cartCopy.products.forEach(elm => { actualQuantity += elm.quantity; cartCopy.total += elm.subtotal })
+        cartCopy.cartIconQuantity = actualQuantity
+        // this.setState({cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart)})
+        this.updateCart(cartCopy)
     }
 
-    postCart = () => {
-        this.cartServices.postCart(this.state.cart)
-            .then(theCart => this.setState({ cart: { ...this.state.cart, _id: theCart._id } }))
-            .then(() => this.props.loggedInUser ? this.updateUser() : localStorage.setItem('cart', this.state.cart._id))
-            .catch(err => console.log(err))
-    }
-
-    updateCart = () => {
-        this.cartServices.updateCart(this.state.cart._id, this.state.cart)
+    updateCart = (cart) => {
+        this.cartServices.updateCart(this.state.cart._id, cart)
+            .then(theCart => {
+                this.setState({ cart: theCart }, () => this.props.setTheCart(this.state.cart))
+            })
             .catch(err => console.log(err))
     }
 
@@ -133,9 +122,25 @@ class ProductUpdate extends Component {
             .catch(err => console.log(err))
     }
 
-    chooseProduct = (idx, price) => {
-        let choosedProductCopy = { product: this.state.product._id, model: idx, price: price, quantity: 1 }
+    chooseProduct = (idx, price, size) => {
+        let productSubTotal = price * this.state.choosedProduct.quantity
+        let choosedProductCopy = {
+            product: this.state.product._id,
+            model: idx,
+            productName: this.state.product.name,
+            modelSize: size,
+            price: price,
+            quantity: this.state.choosedProduct.quantity,
+            subtotal: productSubTotal
+        }
         this.setState({ choosedProduct: choosedProductCopy }, () => console.log(this.state.choosedProduct))
+    }
+    handleQuantity = (action) => {
+        let quantity = this.state.choosedProduct.quantity
+        if (action === 'rest') { if (quantity > 1) { quantity-- } } else { if (quantity < 10) { quantity++ } }
+        let subtotal = this.state.choosedProduct.price * quantity
+        this.setState({ choosedProduct: { ...this.state.choosedProduct, quantity: quantity, subtotal: subtotal } })
+
     }
 
     /*----EDIT PRODUCT----*/
@@ -167,6 +172,7 @@ class ProductUpdate extends Component {
     }
 
     handleUpdateVariant = e => {
+
         let { dataset } = e.target
         let id = dataset.id
         let modelCopy = [...this.state.modelPrev]
@@ -245,9 +251,9 @@ class ProductUpdate extends Component {
     }
 
     render() {
-
         return (
             <Container className="client-body">
+                <Breadcrumbs product={this.state.product.name} category={this.state.product.category} />
                 <h1>{this.state.product.name}</h1>
 
                 <Form onSubmit={this.handleSubmit}>
@@ -312,9 +318,9 @@ class ProductUpdate extends Component {
                                 <td><input type="text" name="size" data-id={idx} value={elm.size} onChange={this.handleUpdateVariant} /></td>
                                 <td><input type="number" name="stock" data-id={idx} value={elm.stock} onChange={this.handleUpdateVariant} /></td>
                                 <td><input type="number" name="price" data-id={idx} value={elm.price} onChange={this.handleUpdateVariant} /></td>
-                                <td><input type="number" name="quantity" data-id={idx} value={elm.price} onChange={this.handleUpdateVariant} /></td>
+                                {/* <td><input type="number" name="quantity" value={this.state.choosedProduct.quantity} /></td> */}
                                 <td><Button className="mb-20" variant="outline-danger" onClick={() => this.deleteVariant(idx)}>Borrar</Button></td>
-                                <td><Button className="mb-20" variant="outline-warning" onClick={() => this.chooseProduct(elm._id, elm.price)}>Elegir</Button></td>
+                                <td><Button className="mb-20" variant="outline-warning" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>Elegir</Button></td>
 
                             </tr>
                         )}
@@ -338,8 +344,18 @@ class ProductUpdate extends Component {
                     <Link to="/admin/products/products-list">Volver al listado de productos</Link>
                 </Button>
 
-
-                <Button className="my-3 float-right" variant="warning" size="medium" onClick={() => this.addToCart(this.state.product._id)}>Comprar producto</Button>
+                <div className="addToCart d-flex my-3 float-right">
+                    <div className="quantity d-flex align-items-center">
+                        <IconButton onClick={() => this.handleQuantity('rest')} aria-label="Restar cantidad">
+                            <RemoveCircleOutlineIcon />
+                        </IconButton>
+                        {this.state.choosedProduct.quantity}
+                        <IconButton onClick={() => this.handleQuantity('sum')} aria-label="Sumar cantidad">
+                            <AddCircleOutlineIcon />
+                        </IconButton>
+                    </div>
+                    <Button variant="warning" size="medium" onClick={() => this.addToCart(this.state.product._id)}>Comprar producto</Button>
+                </div>
 
             </Container>
 

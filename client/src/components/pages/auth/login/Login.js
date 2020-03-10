@@ -46,7 +46,7 @@ class Login extends Component {
             .then(theLoggedUser => {
                 this.setState({ email: '', password: '' })
                 this.props.setTheUser(theLoggedUser)
-                this.props.history.push('/')
+                this.props.history.goBack()
             })
             .catch(err => console.log({ err }))
     }
@@ -108,24 +108,6 @@ class Login extends Component {
                 <Box mt={8}>
                 </Box>
             </Container>
-
-            // <Container>
-
-            //     <h1>Inicio de sesión</h1>
-
-            //     <Form onSubmit={this.handleSubmit}>
-            //         <Form.Group>
-            //             <Form.Label>Usuario</Form.Label>
-            //             <Form.Control type="text" name="email" value={this.state.email} onChange={this.handleChange} />
-            //         </Form.Group>
-            //         <Form.Group>
-            //             <Form.Label>Contraseña</Form.Label>
-            //             <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleChange} />
-            //         </Form.Group>
-
-            //         <Button variant="dark" type="submit">Iniciar sesión</Button>
-            //     </Form>
-            // </Container>
 
         )
     }

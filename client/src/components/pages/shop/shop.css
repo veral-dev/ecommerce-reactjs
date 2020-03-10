@@ -1,7 +1,35 @@
+
+main{
+  margin: 0 auto;
+  padding-top: 70px;
+}
 .client-body{
-  margin: 40px auto;
+  padding-top: 50px;
 }
 .toast{
   margin: 10px auto;
   background-color: green;
 }
+
+button:focus {outline:0;}
+
+.quantity{
+margin-right: 1rem;
+}
+
+@media screen and (max-width: 540px){
+.MuiTableCell-root{
+  padding: 5px !important;
+}
+.MuiIconButton-root{
+  padding: 5px !important;
+}
+main{
+  margin: 0 auto;
+  padding-top: 40px;
+}
+.client-body{
+  padding-top: 55px;
+}
+}
+

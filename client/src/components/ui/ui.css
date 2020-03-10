@@ -1,0 +1,34 @@
+
+.navbar-main img{
+height: 35px;
+margin: 10px 0 10px 48px;
+}
+
+.fitcontent-width{
+    min-width: fit-content;
+}
+.responsive-navbar{
+    flex-direction: column !important;
+    width: 300px;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.responsive-navbar a{
+    color: inherit;
+    text-transform: uppercase;
+}
+.responsive-navbar img{
+    max-width: 120px;
+    margin: 0 auto 20px auto;
+}
+@media screen and (min-width: 960px){
+.menuButton{
+    display: none;
+}
+.navbar-main img{
+height: 40px;
+margin: 15px 0 15px 20px;
+}
+}
