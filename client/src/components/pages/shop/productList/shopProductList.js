@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import ProductCard from './productCardList'
-import Table from 'react-bootstrap/Table'
+// import Table from 'react-bootstrap/Table'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

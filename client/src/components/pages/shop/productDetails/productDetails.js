@@ -11,7 +11,7 @@ import FilesServices from '../../../../services/files.services'
 import CartServices from '../../../../services/cart.services'
 
 /* ----ROUTES----*/
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 import Breadcrumbs from '../../../ui/Breadcrumbs'
 
@@ -22,6 +22,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import Button from 'react-bootstrap/Button'
+
+
 // import Form from 'react-bootstrap/Form'
 // import Toast from 'react-bootstrap/Toast'
 // import Table from 'react-bootstrap/Table'
@@ -59,7 +61,9 @@ class ProductUpdate extends Component {
             },
             cart: { _id: undefined, products: [], cartIconQuantity: 0 },
             modelPrev: [],
+            pricePrev: 0,
             choosedProduct: { product: '', model: '', price: 0, quantity: 1 },
+            productSelected: '',
             mainImage: '',
             showtoast: false,
             showmodal: false,
@@ -80,7 +84,7 @@ class ProductUpdate extends Component {
     /*----LOAD PRODUCTS----*/
     getProductDetails = () => {
         this.productServices.getProductDetails(this.props.match.params.id)
-            .then(theProduct => this.setState({ product: theProduct, mainImage: theProduct.images[0] }))
+            .then(theProduct => this.setState({ product: theProduct, mainImage: theProduct.images[0], pricePrev: theProduct.model[0].price }))
             .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
             .catch(err => console.log(err))
     }
@@ -138,7 +142,7 @@ class ProductUpdate extends Component {
             quantity: this.state.choosedProduct.quantity,
             subtotal: productSubTotal
         }
-        this.setState({ choosedProduct: choosedProductCopy }, () => console.log(this.state.choosedProduct))
+        this.setState({ choosedProduct: choosedProductCopy, pricePrev: price }, () => console.log(this.state.choosedProduct))
     }
     handleQuantity = (action) => {
         let quantity = this.state.choosedProduct.quantity
@@ -168,6 +172,13 @@ class ProductUpdate extends Component {
             product: { ...this.state.product, [name]: value }
         })
     }
+
+    // changeSelected = e => {
+    //     let { value } = e.target
+    //     this.setState({
+    //         productSelected: value
+    //     }, () => this.chooseProduct(value._id, value.size, value.price))
+    // }
 
     handleChangeVariant = e => {
         let { name, value } = e.target
@@ -262,7 +273,7 @@ class ProductUpdate extends Component {
             <Container className="client-body">
                 <Row >
                     <Col sm={12} md={6} className="product-img">
-                        <img src={this.state.mainImage} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
+                        <img src={this.state.mainImage} alt={this.state.product.name} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
                         {this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100px", height: '100px', objectFit: 'cover', padding: '5px' }} />)}
                     </Col>
                     {/* TO-DO PREGUNTAR COMO HACER PARA QUE AL CAMBIAR LA PANTALLA CAMBIE YA QUE CREO QUE HAY QUE CAMBIAR EL ESTADO */}
@@ -276,8 +287,29 @@ class ProductUpdate extends Component {
                     <Col sm={12} md={6} className="product-main">
                         <Breadcrumbs product={this.state.product.name} category={this.state.product.category} />
                         <h1>{this.state.product.name}</h1>
+                        <p>{this.state.pricePrev} €</p>
                         <p>{this.state.product.excerpt}</p>
-                        {this.state.product.model.map((elm, idx) => <p key={elm.idx}>{elm.size}</p>)}
+                        {this.state.product.model.map((elm, idx) => (<Button key={idx} className="mb-20" variant="outline-warning" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>{elm.size}</Button>))}
+
+                        {/* <FormControl variant="outlined" style={{ minWidth: '220px' }}>
+                            <InputLabel id="demo-simple-select-outlined-label">
+                                Elige tu medida
+                             </InputLabel>
+                            <Select
+                                name="productSelected"
+                                value={this.productSelected}
+                                onChange={this.changeSelected}
+
+                            >
+                                <MenuItem value="null">
+                                    <em>Elige tu medida</em>
+                                </MenuItem>
+                                {this.state.product.model.map((elm, idx) => (<MenuItem key={idx} value={elm} >{elm.size}</MenuItem>))}
+
+                            </Select>
+                        </FormControl> */}
+
+
                         <div className="addToCart d-flex my-3">
                             <div className="quantity d-flex align-items-center">
                                 <IconButton onClick={() => this.handleQuantity('rest')} aria-label="Restar cantidad">

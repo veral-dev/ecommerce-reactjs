@@ -6,29 +6,18 @@ import { Link } from 'react-router-dom'
 /* ----STYLE----*/
 import './productList.css'
 /* ----STYLE COMPONENTS----*/
-import { makeStyles } from '@material-ui/core/styles';
 // import Card from '@material-ui/core/Card';
 import Card from 'react-bootstrap/Card'
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardMedia from '@material-ui/core/CardMedia';
+// import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
 import Col from 'react-bootstrap/Col'
-
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 140,
-    },
-});
 
 export default function MediaCard({ name, images, excerpt, category, tags, model, _id, deleteProduct }) {
 
-    const classes = useStyles();
 
     return (
 
