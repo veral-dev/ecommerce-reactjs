@@ -14,24 +14,24 @@ authRoutes.post('/signup', (req, res, next) => {
   const password = req.body.password;
 
   if (!email || !password) {
-    res.status(400).json({ message: 'Provide email and password' });
+    res.status(400).json({ message: 'Introduce un correo eletrónico y una contraseña' });
     return;
   }
   // TO-DO validación en backend
   if (password.length < 6) {
-    res.status(400).json({ message: 'Please make your password at least 6 characters long for security purposes.' });
+    res.status(400).json({ message: 'Tu contraseña debe tener al menos 6 caracteres' });
     return;
   }
 
   User.findOne({ email }, (err, foundUser) => {
 
     if (err) {
-      res.status(500).json({ message: "email check went bad." });
+      res.status(500).json({ message: "Error al registrar el correo electrónico" });
       return;
     }
 
     if (foundUser) {
-      res.status(400).json({ message: 'email taken. Choose another one.' });
+      res.status(400).json({ message: 'Correo electrónico ya usado, introduce uno diferente' });
       return;
     }
 
@@ -45,7 +45,7 @@ authRoutes.post('/signup', (req, res, next) => {
 
     aNewUser.save(err => {
       if (err) {
-        res.status(400).json({ message: 'Saving user to database went wrong.' });
+        res.status(400).json({ message: 'Error mientras se registraba el usuario, vuelve a intentarlo.' });
         return;
       }
 
@@ -54,7 +54,7 @@ authRoutes.post('/signup', (req, res, next) => {
       req.login(aNewUser, (err) => {
 
         if (err) {
-          res.status(500).json({ message: 'Login after signup went bad.' });
+          res.status(500).json({ message: 'El inicio de sesión automático ha fallado' });
           return;
         }
 
@@ -74,7 +74,7 @@ authRoutes.post('/signup', (req, res, next) => {
 authRoutes.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, theUser, failureDetails) => {
     if (err) {
-      res.status(500).json({ message: 'Something went wrong authenticating user' });
+      res.status(500).json({ message: 'Algo fallo al iniciar sesión, vuelve a intentarlo' });
       return;
     }
 
@@ -88,7 +88,7 @@ authRoutes.post('/login', (req, res, next) => {
     // save user in session
     req.login(theUser, (err) => {
       if (err) {
-        res.status(500).json({ message: 'Session save went bad.' });
+        res.status(500).json({ message: 'Error al guardar la sesión' });
         return;
       }
 
@@ -103,7 +103,7 @@ authRoutes.post('/login', (req, res, next) => {
 authRoutes.post('/logout', (req, res, next) => {
   // req.logout() is defined by passport
   req.logout();
-  res.status(200).json({ message: 'Log out success!' });
+  res.status(200).json({ message: 'Has cerrado la sesión correctamente' });
 });
 
 
@@ -113,7 +113,7 @@ authRoutes.get('/loggedin', (req, res, next) => {
     res.status(200).json(req.user);
     return;
   }
-  res.status(403).json({ message: 'Unauthorized' });
+  res.status(403).json({ message: 'No estás autorizado' });
 });
 
 
