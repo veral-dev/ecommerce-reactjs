@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
 /* ----STYLING----*/
-import '../admin.css';
-import './productList.css'
+import '../shop.css';
+// import './productList.css'
 
 /* ----SERVICES----*/
 import ProductsServices from '../../../../services/product.services'
@@ -20,11 +20,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Spinner from 'react-bootstrap/Spinner'
 
-
-// import Button from 'react-bootstrap/Button'
-// import Modal from 'react-bootstrap/Modal'
-
-class ProductsList extends Component {
+class ShopProductsList extends Component {
 
 
     constructor(props) {
@@ -64,7 +60,8 @@ class ProductsList extends Component {
     render() {
 
         return (
-            <div className="admin-body">
+
+            <div className="client-body">
                 <Container className="pb-5">
 
                     <Row className="mb-3">
@@ -80,28 +77,19 @@ class ProductsList extends Component {
                                 </Fab></Link>}
                         </Col>
                     </Row>
-                    <input className="form-control mr-sm-2" value={this.productsSearched} type="search" name="search" placeholder="Buscar" aria-label="Search"
+                    <input className="form-control mr-sm-2 mb-2" value={this.productsSearched} type="search" name="search" placeholder="Buscar" aria-label="Search"
                         id="index-input" onChange={this.handleChangeSearch} />
+
+                    <p className="d-flex justify-content-end">{this.state.products.length} Artículos</p>
 
                     {this.state.products.length ? (
 
-                        <Table responsive striped bordered>
-                            <thead>
-                                <tr>
-                                    <th>Imagen</th>
-                                    <th>Producto</th>
-                                    <th>Categoría</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.products.map(elm => <ProductCard key={elm._id} {...elm} deleteProduct={() => this.deleteProduct(elm._id)} />)}
-                            </tbody>
-                        </Table>
+                        <Row className="my-2">
+                            {this.state.products.map(elm => <ProductCard key={elm._id} {...elm} deleteProduct={() => this.deleteProduct(elm._id)} />)}
+                        </Row>
 
                     )
                         :
-
                         <Spinner animation="border" role="status">
                             <span className="sr-only">Cargando...</span>
                         </Spinner>
@@ -114,4 +102,4 @@ class ProductsList extends Component {
     }
 }
 
-export default ProductsList
+export default ShopProductsList

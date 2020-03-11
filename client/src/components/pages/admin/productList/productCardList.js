@@ -17,7 +17,7 @@ const ProductCard = ({ name, images, excerpt, category, tags, model, _id, delete
             <td>{name}</td>
             <td>{category}</td>
             <td className="d-flex">
-                <Link as="button" className="p-2 my-2 btn btn-outline-info" to={`/products/${_id}`}><EditIcon fontSize="small" /></Link>
+                <Link as="button" className="p-2 my-2 btn btn-outline-info" to={`/admin/editar-producto/${_id}`}><EditIcon fontSize="small" /></Link>
                 <Button variant="outline-danger" className="ml-2 my-2 p-2" onClick={deleteProduct}><DeleteForeverIcon fontSize="small" /></Button>
             </td>
         </tr>

@@ -21,7 +21,6 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 /* ----ICONS---- */
@@ -48,14 +47,6 @@ class Navigation extends Component {
         if (prevProps.userCart.cartIconQuantity !== this.props.userCart.cartIconQuantity) this.setState({ cartIcon: this.props.userCart.cartIconQuantity })
     }
 
-    // cartQuantityTotal = () => {
-    //     let userProductsCopy = this.props.userCart.products
-    //     let actualQuantity = 0
-    //     userProductsCopy.forEach(elm => actualQuantity += elm.quantity)
-    //     this.setState({ cartIconQuantity: actualQuantity })
-    // }
-
-
     logout = () => {
         this.toggle("showDrawer")
         this.authServices.logout()
@@ -74,14 +65,14 @@ class Navigation extends Component {
 
     render() {
 
-        const greeting = this.props.loggedInUser ? <>Hola, {this.props.loggedInUser.name}</> : <>Hola, invitad@</>
+        // const greeting = this.props.loggedInUser ? <>Hola, {this.props.loggedInUser.name}</> : <>Hola, invitad@</>
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
         return (
             <div>
                 {/* <CssBaseline /> */}
-                <AppBar position="fixed" className="navbar-main" style={{ 'color': 'black', 'backgroundColor': 'white' }}>
+                <AppBar position="fixed" className="navbar-main" style={{ 'color': 'black', 'backgroundColor': 'rgba(255, 255, 255, 0.65)' }}>
                     <Toolbar className="d-flex justify-content-between">
                         <div className="menuButton">
                             <IconButton color="inherit" aria-label="Open drawer" edge="start" onClick={() => this.toggle("showDrawer")} >
@@ -97,10 +88,11 @@ class Navigation extends Component {
                             <Nav className="ml-auto">
                                 <Nav.Link as="div"> <Link to="/profile">Perfil</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/admin/products/create">Crear producto</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/admin/products/products-list">Lista de productos</Link></Nav.Link>
+                                <Nav.Link as="div"> <Link to="/admin/products-list">Lista de productos</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/admin/users/users-list">Lista de usuarios</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link>
                                 <Nav.Link as="div"> <Link to="/cuenta/editar">Editar mi cuenta</Link></Nav.Link>
+                                {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Hidden>
 
@@ -135,7 +127,7 @@ class Navigation extends Component {
 
 
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/products/create">Crear producto</Link>
-                                <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/products/products-list">Lista de productos</Link>
+                                <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/products-list">Lista de productos</Link>
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/users/users-list">Lista de usuarios</Link>
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/users/create-user">Crear usuario</Link>
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/cuenta/editar">Editar mi cuenta</Link>
@@ -144,13 +136,14 @@ class Navigation extends Component {
                         </Drawer>
                     </Hidden>
 
+
                 </nav>
 
                 <Menu id="fade-menu" keepMounted TransitionComponent={Fade}
                     anchorEl={anchorEl}
                     open={open}
                     onClose={this.handleClose}
-                    PaperProps={{ style: { transform: 'translateY(15%)' } }} >
+                    PaperProps={{ style: { transform: 'translateY(30%)' } }} >
                     <CartDetails loggedInUser={this.props.loggedInUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
                 </Menu>
             </div>

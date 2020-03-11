@@ -1,0 +1,49 @@
+.product-card-shop img{
+    height: auto;
+    object-fit: cover;
+    max-width: 100%;
+}
+.col-card-shop{
+padding: 5px;
+}
+.card {
+    border: none;
+    border-radius: 0;
+    text-align: center;
+}
+.spinner-border{    
+    position: absolute;
+    top: 40vh;
+    left: 50vw;
+}
+
+.card-body{
+    padding: 0.75rem;
+}
+.h5 {
+    font-size: .90rem;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    line-height: 1.4;
+}
+
+.card-img, .card-img-top{
+    border-radius: 0;
+}
+
+.product-list-price{
+    font-size: 1rem;
+    font-weight: 800;
+}
+h2{
+    font-size: 1rem;
+}
+
+.addCartList{
+    position: absolute;
+    left: 0;
+    bottom: -17px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+}

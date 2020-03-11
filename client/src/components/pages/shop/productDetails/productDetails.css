@@ -1,0 +1,23 @@
+.product-main h1{
+    margin: 20px 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+
+@media (max-width: 768px){
+.product-img{
+    padding-top: 20px;
+    /* max-width: 100%;
+    overflow: scroll;
+    height: 80vh; */
+}
+.product-main{
+    padding-top: 20px;
+}
+}
+
+/* .client-product{
+    padding-left: 50px;
+} */

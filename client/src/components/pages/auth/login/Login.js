@@ -23,6 +23,8 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Toast from 'react-bootstrap/Toast'
+
 
 class Login extends Component {
 
@@ -30,7 +32,9 @@ class Login extends Component {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errorMessage: '',
+            showError: false,
         }
         this.authServices = new AuthServices()
     }
@@ -48,20 +52,23 @@ class Login extends Component {
                 this.props.setTheUser(theLoggedUser)
                 this.props.history.goBack()
             })
-            .catch(err => console.log({ err }))
+            .catch(err => this.setState({ errorMessage: err.response.data.message },
+                () => { this.toggle("showError") }))
     }
 
     handleSubmit = e => {
         e.preventDefault()
         this.postUser()
+
     }
 
+    toggle = (component) => this.setState({ [component]: !this.state[component] })
 
     render() {
 
         return (
 
-            <Container component="main" maxWidth="xs">
+            <Container maxWidth="xs">
                 <CssBaseline />
                 <div className="paper">
                     <Avatar className="avatar" style={{ backgroundColor: '#fdd100' }}>
@@ -103,6 +110,16 @@ class Login extends Component {
                                 </Link>
                             </Grid>
                         </Grid>
+                        {/* <Snackbar open={this.showError} autoHideDuration={6000} onClose={() => this.toggle("showError")}>
+                            <Alert onClose={() => this.toggle("showError")} severity="success">
+                                This is a success message!
+                            </Alert>
+                        </Snackbar> */}
+                        <Toast className="mt-3" style={{ backgroundColor : 'red' }} onClose={() => this.toggle("showError")} show={this.state.showError} delay={3000} autohide>
+                            <Toast.Header>
+                                <strong className="mr-auto">{this.state.errorMessage}</strong>
+                            </Toast.Header>
+                        </Toast>
                     </form>
                 </div>
                 <Box mt={8}>

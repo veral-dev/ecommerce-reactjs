@@ -51,7 +51,7 @@ class ProductForm extends Component {
                 model: [],
             },
         })
-        // this.props.refreshList()
+        document.getElementById("inputFile").value = null
     }
 
     postProduct = () => {
@@ -139,7 +139,7 @@ class ProductForm extends Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Imágenes</Form.Label>
-                        <Form.Control type="file" name="images" onChange={this.handleFileUpload} multiple />
+                        <Form.Control type="file" id="inputFile" name="images" onChange={this.handleFileUpload} multiple />
                         {this.state.product.images !== 0 ? this.state.product.images.map((elm, idx) => <img className="m-3" src={elm} key={idx} alt={idx} style={{ width: "50px" }} />) : 'No hay imágenes cargadas'}
                     </Form.Group>
 
@@ -147,7 +147,7 @@ class ProductForm extends Component {
                 </Form>
 
 
-                <Modal show={this.state.showmodal} onHide={this.toggleModal}>
+                <Modal className="modal-set" show={this.state.showmodal} onHide={this.toggleModal}>
                     <Modal.Body>
                         <Form onSubmit={this.handleSubmitVariant}>
                             <Form.Group>

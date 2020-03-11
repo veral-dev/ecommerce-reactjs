@@ -32,6 +32,20 @@
     border: none;
 }
 
+td input{
+    max-width: 100px;
+}
+td .size-width{
+    max-width: 200px;
+}
+
+img {
+    max-width: 100%;
+}
+.toast{
+    margin: 10px auto;
+    background-color: green;
+}
 @media screen and (max-width: 540px){
     .table{
         font-size: 0.8rem;

@@ -27,7 +27,7 @@ class Home extends Component {
     render() {
 
         return (
-            <Container>
+            <Container className="client-body">
 
                 <h1>Bienvenido a Relakso</h1>
 

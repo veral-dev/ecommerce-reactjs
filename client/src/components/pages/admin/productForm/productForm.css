@@ -3,5 +3,9 @@
 }
 .create-product{
     max-width: 600px;
-    margin: 0 auto;
+    margin: 50px auto;
+}
+
+.modal-set{
+    margin-top: 100px;
 }

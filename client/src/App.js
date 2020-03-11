@@ -18,12 +18,16 @@ import Signup from './components/pages/auth/signup/Signup'
 import Login from './components/pages/auth/login/Login'
 import CreateProduct from './components/pages/admin/createProduct/createProduct'
 import ProductsList from './components/pages/admin/productList/productList'
+import EditProduct from './components/pages/admin/editProduct/editProduct'
+
 import UsersList from './components/pages/admin/userList/userList'
 import CreateUser from './components/pages/admin/createUser/createUser'
 import UserUpdate from './components/pages/shop/userUpdate/userUpdate'
 import ProductDetails from './components/pages/shop/productDetails/productDetails';
 import CartDetails from './components/pages/shop/cartDetails/cartDetails'
 import Checkout from './components/pages/shop/checkout/checkout'
+import ShopProductsList from './components/pages/shop/productList/shopProductList'
+
 
 
 
@@ -92,9 +96,12 @@ class App extends Component {
             <Route path="/signup" render={() => <Signup setTheUser={this.setTheUser} />} />
             <Route path="/login" render={props => <Login setTheUser={this.setTheUser} {...props} />} />
             <Route path="/admin/products/create" render={() => this.state.loggedInUser ? <CreateProduct loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
-            <Route path="/admin/products/products-list" render={() => this.state.loggedInUser ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/products-list" render={() => this.state.loggedInUser ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/editar-producto/:id" render={props => <EditProduct loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
 
-            <Route path="/products/:id" render={props => <ProductDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
+            <Route path="/productos/:id" render={props => <ProductDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
+            <Route path="/coleccion" render={() => this.state.loggedInUser ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <ShopProductsList loggedInUser={this.state.loggedInUser} />} />
+
             <Route path="/cart" render={props => <CartDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
             <Route path="/checkout" render={props => <Checkout loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
 

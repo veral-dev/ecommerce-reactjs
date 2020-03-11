@@ -7,13 +7,12 @@ import './checkout.css';
 import UserServices from '../../../../services/user.services'
 
 /* ----STYLE COMPONENTS----*/
-import Container from 'react-bootstrap/Container'
+// import Container from 'react-bootstrap/Container'
 // import Button from 'react-bootstrap/Button'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+
 
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';

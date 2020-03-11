@@ -22,6 +22,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Toast from 'react-bootstrap/Toast'
+
 
 
 class Signup extends Component {
@@ -31,16 +33,8 @@ class Signup extends Component {
         this.state = {
             email: '',
             password: '',
-            name: '',
-            lastName: '',
-            address1: '',
-            address2: '',
-            zipCode: '',
-            city: '',
-            state: '',
-            country: '',
-            phone: '',
-            errorMessage: ''
+            errorMessage: '',
+            showError: false,
         }
         this.authServices = new AuthServices()
     }
@@ -57,7 +51,8 @@ class Signup extends Component {
                 this.setState({ email: '', password: '' })
                 this.props.setTheUser(theLoggedNewUser)
             })
-            .catch(err => console.log(err))
+            .catch(err => this.setState({ errorMessage: err.response.data.message },
+                () => { this.toggle("showError") }))
     }
 
     handleSubmit = e => {
@@ -70,13 +65,14 @@ class Signup extends Component {
         this.postUser()
     }
 
+    toggle = (component) => this.setState({ [component]: !this.state[component] })
 
     render() {
 
         return (
 
 
-            <Container component="main" maxWidth="xs">
+            <Container maxWidth="xs">
                 <CssBaseline />
                 <div className="paper">
                     <Avatar className="avatar" style={{ backgroundColor: '#fdd100' }}>
@@ -129,7 +125,11 @@ class Signup extends Component {
                                 </Link>
                             </Grid>
                         </Grid>
-                        {this.state.errorMessage ? (<p>{this.state.errorMessage}</p>) : null}
+                        <Toast className="mt-3" onClose={() => this.toggle("showError")} show={this.state.showError} delay={3000} autohide>
+                            <Toast.Header>
+                                <strong className="mr-auto">{this.state.errorMessage}</strong>
+                            </Toast.Header>
+                        </Toast>
                     </form>
                 </div>
             </Container>

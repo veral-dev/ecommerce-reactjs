@@ -15,14 +15,14 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 const ProductCard = ({ product, category }) => {
 
     return (
-        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+        <Breadcrumbs style={{ fontSize: '12px' }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/">
                 <HomeOutlinedIcon />
             </Link>
             <Link color="inherit" href="/">
                 {category}
             </Link>
-            <Typography color="textPrimary">{product}</Typography>
+            <Typography style={{ fontSize: '12px' }}>{product}</Typography>
         </Breadcrumbs>
     );
 }

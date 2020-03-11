@@ -19,18 +19,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// import Paper from '@material-ui/core/Paper';
 
-// import Button from 'react-bootstrap/Button'
-// import Form from 'react-bootstrap/Form'
-// import Toast from 'react-bootstrap/Toast'
-// import Table from 'react-bootstrap/Table'
-// import Modal from 'react-bootstrap/Modal'
 /* ----ICONS---- */
 import IconButton from '@material-ui/core/IconButton';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
 class CartDetails extends Component {
 
@@ -74,22 +67,26 @@ class CartDetails extends Component {
     handleQuantity = (action, id) => {
         let cartCopy = { ...this.state.cart }
 
-        let quantity = cartCopy.products[id].quantity
+        let quantity = cartCopy.products[id].quantity ? cartCopy.products[id].quantity : 0
 
+        if (action === 'rest') { if (quantity > 1) { quantity-- } else { this.deleteFromCart(id) } } else { if (quantity < 10) { quantity++ } }
 
-        if (action === 'rest') { if (quantity > 1) { quantity-- } } else { if (quantity < 10) { quantity++ } }
-        cartCopy.products[id].quantity = quantity
-        cartCopy.products[id].subtotal = cartCopy.products[id].price * quantity
-        cartCopy.total = cartCopy.cartIconQuantity = 0
-        cartCopy.products.forEach(elm => { cartCopy.total += elm.subtotal; cartCopy.cartIconQuantity += elm.quantity })
-        // this.setState({ cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart) })
-        this.updateCart(cartCopy)
+        if (cartCopy.products[id]) {
+            cartCopy.products[id].quantity = quantity
+            cartCopy.products[id].subtotal = cartCopy.products[id].price * quantity
+            cartCopy.total = cartCopy.cartIconQuantity = 0
+            cartCopy.products.forEach(elm => { cartCopy.total += elm.subtotal; cartCopy.cartIconQuantity += elm.quantity })
+            // this.setState({ cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart) })
+            this.updateCart(cartCopy)
+        }
     }
 
-    deleteFromCart = (idx) => {
+    deleteFromCart = (id) => {
         let cartCopy = { ...this.state.cart }
-        cartCopy.products.splice(idx, 1)
+        cartCopy.products.splice(id, 1)
+        if (cartCopy.products.length === 0) { cartCopy.total = 0; cartCopy.cartIconQuantity = 0 }
         this.updateCart(cartCopy)
+
 
     }
 
@@ -146,7 +143,7 @@ class CartDetails extends Component {
     render() {
 
         return (
-            <Container className="client-body">
+            <Container className="cart-body">
                 <h1 className="text-center text-uppercase">Carrito</h1>
                 <TableContainer>
                     <Table style={{ padding: "5px" }} aria-label="spanning table">
@@ -156,11 +153,10 @@ class CartDetails extends Component {
                                 <TableCell align="center">Cantidad</TableCell>
                                 <TableCell align="center">Precio unitario</TableCell>
                                 <TableCell align="right">Subtotal</TableCell>
-                                <TableCell align="center"></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.props.userCart.products.map((elm, idx) => (
+                            {this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
                                 <TableRow key={idx}>
                                     <TableCell>{elm.productName} | {elm.modelSize}</TableCell>
                                     <TableCell align="center">
@@ -176,11 +172,11 @@ class CartDetails extends Component {
                                     </TableCell>
                                     <TableCell align="center">{elm.price}€</TableCell>
                                     <TableCell align="right">{elm.subtotal}€</TableCell>
-                                    <TableCell align="center"><IconButton color="secondary" onClick={() => this.deleteFromCart(idx)} aria-label="Borrar">
+                                    {/* <TableCell align="center"><IconButton color="secondary" onClick={() => this.deleteFromCart(idx)} aria-label="Borrar">
                                         <DeleteOutlinedIcon />
-                                    </IconButton></TableCell>
+                                    </IconButton></TableCell> */}
                                 </TableRow>
-                            ))}
+                            )) : <TableRow><TableCell colSpan={4}>Tu carrito está vacío</TableCell></TableRow>}
                             <TableRow>
                                 <TableCell colSpan={2}><strong>Total</strong></TableCell>
                                 <TableCell align="right"></TableCell>
