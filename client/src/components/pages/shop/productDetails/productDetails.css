@@ -4,8 +4,15 @@
     text-transform: uppercase;
     font-weight: 700;
 }
-
-
+.product-price{
+    font-size: 1.6rem;
+}
+.product-selection{
+    width: 100%;
+}
+.selected{
+    background-color: green;
+}
 @media (max-width: 768px){
 .product-img{
     padding-top: 20px;

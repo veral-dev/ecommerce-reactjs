@@ -32,7 +32,7 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
-class ProductUpdate extends Component {
+class ProductUpdateAdmin extends Component {
 
     constructor(props) {
         super(props)
@@ -384,4 +384,4 @@ class ProductUpdate extends Component {
     }
 }
 
-export default ProductUpdate
+export default ProductUpdateAdmin

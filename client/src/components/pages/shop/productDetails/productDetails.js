@@ -77,7 +77,7 @@ class ProductUpdate extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.loggedInUser._id !== this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
-        if (prevProps.userCart._id !== this.props.userCart._id) this.setState({ cart: this.props.userCart })
+        if (prevProps.userCart._id !== this.props.userCart._id || prevProps.userCart.cartIconQuantity !== this.props.userCart.cartIconQuantity) this.setState({ cart: this.props.userCart })
     }
 
 
@@ -132,6 +132,7 @@ class ProductUpdate extends Component {
     }
 
     chooseProduct = (idx, price, size) => {
+        if (this.state.choosedProduct.model) document.getElementById(this.state.choosedProduct.model).classList.toggle("selected")
         let productSubTotal = price * this.state.choosedProduct.quantity
         let choosedProductCopy = {
             product: this.state.product._id,
@@ -142,7 +143,7 @@ class ProductUpdate extends Component {
             quantity: this.state.choosedProduct.quantity,
             subtotal: productSubTotal
         }
-        this.setState({ choosedProduct: choosedProductCopy, pricePrev: price }, () => console.log(this.state.choosedProduct))
+        this.setState({ choosedProduct: choosedProductCopy, pricePrev: price }, () => document.getElementById(this.state.choosedProduct.model).classList.toggle("selected"))
     }
     handleQuantity = (action) => {
         let quantity = this.state.choosedProduct.quantity
@@ -172,13 +173,6 @@ class ProductUpdate extends Component {
             product: { ...this.state.product, [name]: value }
         })
     }
-
-    // changeSelected = e => {
-    //     let { value } = e.target
-    //     this.setState({
-    //         productSelected: value
-    //     }, () => this.chooseProduct(value._id, value.size, value.price))
-    // }
 
     handleChangeVariant = e => {
         let { name, value } = e.target
@@ -287,28 +281,14 @@ class ProductUpdate extends Component {
                     <Col sm={12} md={6} className="product-main">
                         <Breadcrumbs product={this.state.product.name} category={this.state.product.category} />
                         <h1>{this.state.product.name}</h1>
-                        <p>{this.state.pricePrev} €</p>
+                        <p className="product-price">{this.state.pricePrev} €</p>
                         <p>{this.state.product.excerpt}</p>
-                        {this.state.product.model.map((elm, idx) => (<Button key={idx} className="mb-20" variant="outline-warning" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>{elm.size}</Button>))}
 
-                        {/* <FormControl variant="outlined" style={{ minWidth: '220px' }}>
-                            <InputLabel id="demo-simple-select-outlined-label">
-                                Elige tu medida
-                             </InputLabel>
-                            <Select
-                                name="productSelected"
-                                value={this.productSelected}
-                                onChange={this.changeSelected}
+                        {this.state.product.model.map((elm, idx) => (
+                            <Button key={idx} className="product-selection" id={elm._id} variant="outline" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>{elm.size}</Button>
 
-                            >
-                                <MenuItem value="null">
-                                    <em>Elige tu medida</em>
-                                </MenuItem>
-                                {this.state.product.model.map((elm, idx) => (<MenuItem key={idx} value={elm} >{elm.size}</MenuItem>))}
 
-                            </Select>
-                        </FormControl> */}
-
+                        ))}
 
                         <div className="addToCart d-flex my-3">
                             <div className="quantity d-flex align-items-center">

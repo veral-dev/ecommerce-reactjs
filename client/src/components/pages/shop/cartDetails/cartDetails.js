@@ -60,14 +60,20 @@ class CartDetails extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.userCart._id !== this.props.userCart._id) this.setState({ cart: this.props.userCart })
+        if (prevProps.userCart._id !== this.props.userCart._id || prevProps.userCart.cartIconQuantity !== this.props.userCart.cartIconQuantity) this.setState({ cart: this.props.userCart })
     }
 
 
     handleQuantity = (action, id) => {
         let cartCopy = { ...this.state.cart }
+        console.log(cartCopy.products[id])
 
-        let quantity = cartCopy.products[id].quantity ? cartCopy.products[id].quantity : 0
+        // let quantity = 0
+        // if (cartCopy.products[id].quantity) quantity = cartCopy.products[id].quantity
+        // quantity = cartCopy.products[id].quantity ? cartCopy.products[id].quantity : quantity
+        let quantity = cartCopy.products[id].quantity || 0
+
+
 
         if (action === 'rest') { if (quantity > 1) { quantity-- } else { this.deleteFromCart(id) } } else { if (quantity < 10) { quantity++ } }
 
@@ -79,6 +85,7 @@ class CartDetails extends Component {
             // this.setState({ cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart) })
             this.updateCart(cartCopy)
         }
+
     }
 
     deleteFromCart = (id) => {
@@ -95,6 +102,7 @@ class CartDetails extends Component {
             .then(theCart => {
                 this.setState({ cart: theCart }, () => this.props.setTheCart(this.state.cart))
             })
+            .then(() => console.log(this.state.cart))
             .catch(err => console.log(err))
     }
 
