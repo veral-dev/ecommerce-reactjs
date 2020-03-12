@@ -2,22 +2,16 @@ import React, { Component } from 'react'
 
 /* ----STYLING----*/
 import './aside.css';
-// import './productList.css'
 
 /* ----SERVICES----*/
 import ProductsServices from '../../../../services/product.services'
 
 /* ----ROUTES----*/
-import { Link } from 'react-router-dom'
+import ProductCard from '../productList/productCardList'
+
 
 /* ----STYLE COMPONENTS----*/
-import ProductCard from '../productList/productCardList'
-// import Table from 'react-bootstrap/Table'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import Spinner from 'react-bootstrap/Spinner'
 
 class AsideUpsells extends Component {

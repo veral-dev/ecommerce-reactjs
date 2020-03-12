@@ -10,7 +10,6 @@ import Link from '@material-ui/core/Link';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 /* ----ICONS----*/
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 
 const ProductCard = ({ product, category }) => {
 

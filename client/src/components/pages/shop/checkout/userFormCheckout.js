@@ -7,10 +7,7 @@ import './checkout.css';
 import UserServices from '../../../../services/user.services'
 
 /* ----STYLE COMPONENTS----*/
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 
@@ -41,7 +38,7 @@ class UserFormCheckout extends Component {
     }
 
     componentDidMount = () => {
-      
+
     }
 
     componentDidUpdate(prevProps) {
@@ -61,7 +58,7 @@ class UserFormCheckout extends Component {
         this.setState({
             user: { ...this.state.user, [name]: value }
         }, () => this.props.setTheUser(this.state.user))
-        
+
     }
 
 
@@ -85,9 +82,6 @@ class UserFormCheckout extends Component {
         return (
 
             <>
-                <Typography variant="h6" gutterBottom>
-                    Dirección de envío
-                </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -194,7 +188,7 @@ class UserFormCheckout extends Component {
                             label="Usa esta dirección para la factura"
                         /> */}
                     </Grid>
-                    <Button onClick={this.handleSubmit} variant="outlined" className="mx-auto mt-4" size="small" startIcon={<SaveIcon />}>
+                    <Button onClick={this.handleSubmit} variant="outlined" className="ml-2 mt-4" size="small" startIcon={<SaveIcon />}>
                         Guardar dirección
                     </Button>
                     {/* <Button className="mx-auto mt-2" variant="outline-dark">Guardar dirección</Button> */}

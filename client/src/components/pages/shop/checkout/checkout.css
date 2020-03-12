@@ -2,3 +2,23 @@
     max-width: 600px;
     padding-top: 5vh;
 }
+
+.checkout-table img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.checkout-table p{
+    margin-bottom: 0px;
+}
+.checkout-model-size{
+    font-size: 12px;
+}
+.btn-payment{
+    text-transform: uppercase;
+}
+.MuiTableCell-root{
+    padding: 10px 5px !important;
+}

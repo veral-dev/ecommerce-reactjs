@@ -27,7 +27,19 @@ margin-right: 1rem;
   text-transform: uppercase;
   font-weight:400;
 }
+.cart-table p{
+    margin-bottom: 0px;
+}
+.cart-model-size{
+    font-size: 12px;
+}
 
+.cart-table img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin: 0 auto;
+}
 @media screen and (max-width: 768px){
 .MuiTableCell-root{
   padding: 5px !important;

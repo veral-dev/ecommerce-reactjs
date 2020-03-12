@@ -75,7 +75,6 @@ class CartDetails extends Component {
             cartCopy.products[id].subtotal = cartCopy.products[id].price * quantity
             cartCopy.total = cartCopy.cartIconQuantity = 0
             cartCopy.products.forEach(elm => { cartCopy.total += elm.subtotal; cartCopy.cartIconQuantity += elm.quantity })
-            // this.setState({ cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart) })
             this.updateCart(cartCopy)
         }
 
@@ -106,39 +105,37 @@ class CartDetails extends Component {
             <Container className="cart-body">
                 <h1 className="text-center text-uppercase">Carrito</h1>
                 <TableContainer>
-                    <Table style={{ padding: "5px" }} aria-label="spanning table">
+                    <Table style={{ padding: "5px" }} className="cart-table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Productos</TableCell>
-                                <TableCell align="center">Cantidad</TableCell>
+                                <TableCell>Imagen</TableCell>
+                                <TableCell colSpan={2}>Productos</TableCell>
                                 <TableCell align="center">Precio unitario</TableCell>
-                                <TableCell align="right">Subtotal</TableCell>
+                                <TableCell align="center">Subtotal</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
                                 <TableRow key={idx}>
-                                    <TableCell>{elm.productName} | {elm.modelSize}</TableCell>
+                                    <TableCell><img src={elm.product.images[0]} alt={elm.name} /></TableCell>
+                                    <TableCell><p>{elm.productName}</p><p className="cart-model-size">{elm.modelSize}</p></TableCell>
                                     <TableCell align="center">
-                                        <div className="d-flex align-items-center justify-content-center">
-                                            <IconButton onClick={() => this.handleQuantity('rest', idx)} aria-label="Restar cantidad">
-                                                <RemoveCircleOutlineIcon />
-                                            </IconButton>
-                                            {elm.quantity}
-                                            <IconButton onClick={() => this.handleQuantity('sum', idx)} aria-label="Sumar cantidad">
-                                                <AddCircleOutlineIcon />
-                                            </IconButton>
-                                        </div>
+
                                     </TableCell>
                                     <TableCell align="center">{elm.price}€</TableCell>
-                                    <TableCell align="right">{elm.subtotal}€</TableCell>
-                                    {/* <TableCell align="center"><IconButton color="secondary" onClick={() => this.deleteFromCart(idx)} aria-label="Borrar">
-                                        <DeleteOutlinedIcon />
-                                    </IconButton></TableCell> */}
+                                    <TableCell align="right"><p><div className="d-flex align-items-center justify-content-center">
+                                        <IconButton onClick={() => this.handleQuantity('rest', idx)} aria-label="Restar cantidad">
+                                            <RemoveCircleOutlineIcon />
+                                        </IconButton>
+                                        {elm.quantity}
+                                        <IconButton onClick={() => this.handleQuantity('sum', idx)} aria-label="Sumar cantidad">
+                                            <AddCircleOutlineIcon />
+                                        </IconButton>
+                                    </div></p><p className="text-center">{elm.subtotal}€</p></TableCell>
                                 </TableRow>
                             )) : <TableRow><TableCell colSpan={4}>Tu carrito está vacío</TableCell></TableRow>}
                             <TableRow>
-                                <TableCell colSpan={2}><strong>Total</strong></TableCell>
+                                <TableCell colSpan={3}><strong>Total</strong></TableCell>
                                 <TableCell align="right"></TableCell>
                                 <TableCell align="right"><strong>{this.state.cart.total}€</strong></TableCell>
                             </TableRow>

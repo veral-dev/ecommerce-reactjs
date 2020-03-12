@@ -13,18 +13,19 @@ import CartServices from '../../../../services/cart.services'
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
 
-import CartDetails from '../cartDetails/cartDetails'
 import UserFormCheckout from './userFormCheckout'
 // import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 /* ----ICONS---- */
-// import IconButton from '@material-ui/core/IconButton';
-// import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-// import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-// import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
 
 class Checkout extends Component {
 
@@ -64,7 +65,6 @@ class Checkout extends Component {
         cartCopy.products[id].subtotal = cartCopy.products[id].price * quantity
         cartCopy.total = cartCopy.cartIconQuantity = 0
         cartCopy.products.forEach(elm => { cartCopy.total += elm.subtotal; cartCopy.cartIconQuantity += elm.quantity })
-        // this.setState({ cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart) })
         this.updateCart(cartCopy)
     }
 
@@ -140,11 +140,52 @@ class Checkout extends Component {
 
                 <h1 className="mt-3 text-center">Finalizar compra</h1>
                 <section className="mt-3">
+                    <h5><strong>Dirección de envío</strong></h5>
+
                     <UserFormCheckout loggedInUser={this.props.loggedInUser} setTheUser={this.setTheUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
                 </section>
-                <section>
-                    <CartDetails loggedInUser={this.props.loggedInUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
+                <section className="my-5">
+                    <h5><strong>Carrito</strong></h5>
+                    <TableContainer>
+                        <Table style={{ padding: "5px" }} className="checkout-table" aria-label="spanning table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Imagen</TableCell>
+                                    <TableCell align="center">Productos</TableCell>
+                                    <TableCell align="center">Cantidad</TableCell>
+                                    <TableCell align="center">Precio unitario</TableCell>
+                                    <TableCell align="right">Subtotal</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
+                                    <TableRow key={idx}>
+                                        <TableCell><img src={elm.product.images[0]} alt={elm.name} /></TableCell>
+                                        <TableCell><p>{elm.productName}</p><p className="checkout-model-size">{elm.modelSize}</p></TableCell>
+                                        <TableCell align="center">
+                                            <div className="d-flex align-items-center justify-content-center">
+                                                {elm.quantity}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell align="center">{elm.price}€</TableCell>
+                                        <TableCell align="right">{elm.subtotal}€</TableCell>
+                                    </TableRow>
+                                )) : <TableRow><TableCell colSpan={4}>Tu carrito está vacío</TableCell></TableRow>}
+                                <TableRow>
+                                    <TableCell colSpan={3}><p className="text-uppercase"><strong>Total</strong></p></TableCell>
+                                    <TableCell align="right"></TableCell>
+                                    <TableCell align="right"><strong>{this.state.cart.total}€</strong></TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </section>
+                <section>
+                    <h5><strong>Forma de pago</strong></h5>
+                    <Link as="button" className="btn btn-warning btn-payment my-5" to="/#" onClick={this.props.handleClose}>Confirmar pago</Link>
+                </section>
+
+
                 <br></br><br></br><br></br><br></br><br></br>
 
             </Container>
