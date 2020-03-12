@@ -61,7 +61,7 @@ class App extends Component {
     this.cartServices.postCart(this.state.userCart)
       .then(theCart => this.setState({ userCart: { ...this.state.userCart, _id: theCart._id } }))
       .then(() => this.state.loggedInUser ? this.updateUser() : localStorage.setItem('guestCart', this.state.userCart._id))
-      .catch(err => console.log(err))
+      .catch(err => new Error(err))
   }
 
   updateUser = () => {
@@ -69,7 +69,7 @@ class App extends Component {
     userCopy.cart = this.state.userCart
     this.userServices.updateUser(this.state.loggedInUser._id, userCopy)
       .then(theUser => this.setState({ loggedInUser: theUser }))
-      .catch(err => console.log(err))
+      .catch(err => new Error(err))
   }
 
   fetchCart = cartId => {

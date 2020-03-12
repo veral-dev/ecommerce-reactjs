@@ -86,10 +86,10 @@ class Navigation extends Component {
 
                         <Hidden smDown implementation="css">
                             <Nav className="ml-auto">
-                                <Nav.Link as="div"> <Link to="/admin/products-list">Lista de productos</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/coleccion">Colección</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/cuenta/editar">Editar mi cuenta</Link></Nav.Link>
+                                <Nav.Link as="div"><Link to="/coleccion">Colección</Link></Nav.Link>
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/products-list">Lista de productos</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link> : null}
+                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to="/cuenta/editar">Editar mi cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Hidden>
@@ -122,10 +122,10 @@ class Navigation extends Component {
                             <Nav className="mx-auto responsive-navbar">
                                 <img src="/Relakso-Logo-BL.png" alt="Relakso ReactJS Ecommerce" />
 
-                                <Nav.Link as="div"> <Link to="/admin/products-list" onClick={() => this.toggle("showDrawer")}>Lista de productos</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/coleccion" onClick={() => this.toggle("showDrawer")}>Colección</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/admin/users/create-user" onClick={() => this.toggle("showDrawer")}>Crear usuario</Link></Nav.Link>
-                                <Nav.Link as="div"> <Link to="/cuenta/editar" onClick={() => this.toggle("showDrawer")}>Editar mi cuenta</Link></Nav.Link>
+                                <Nav.Link as="div"><Link to="/coleccion" onClick={() => this.toggle("showDrawer")}>Colección</Link></Nav.Link>
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/products-list" onClick={() => this.toggle("showDrawer")}>Lista de productos</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/users/create-user" onClick={() => this.toggle("showDrawer")}>Crear usuario</Link></Nav.Link> : null}
+                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to="/cuenta/editar" onClick={() => this.toggle("showDrawer")}>Editar mi cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Drawer>

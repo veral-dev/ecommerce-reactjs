@@ -123,7 +123,7 @@ class CartDetails extends Component {
 
                                     </TableCell>
                                     <TableCell align="center">{elm.price}€</TableCell>
-                                    <TableCell align="right"><p><div className="d-flex align-items-center justify-content-center">
+                                    <TableCell align="right"><div className="d-flex align-items-center justify-content-center">
                                         <IconButton onClick={() => this.handleQuantity('rest', idx)} aria-label="Restar cantidad">
                                             <RemoveCircleOutlineIcon />
                                         </IconButton>
@@ -131,7 +131,7 @@ class CartDetails extends Component {
                                         <IconButton onClick={() => this.handleQuantity('sum', idx)} aria-label="Sumar cantidad">
                                             <AddCircleOutlineIcon />
                                         </IconButton>
-                                    </div></p><p className="text-center">{elm.subtotal}€</p></TableCell>
+                                    </div><p className="text-center">{elm.subtotal}€</p></TableCell>
                                 </TableRow>
                             )) : <TableRow><TableCell colSpan={4}>Tu carrito está vacío</TableCell></TableRow>}
                             <TableRow>

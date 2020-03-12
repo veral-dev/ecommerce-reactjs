@@ -82,7 +82,7 @@ class ProductUpdateAdmin extends Component {
         this.productServices.getProductDetails(this.props.match.params.id)
             .then(theProduct => this.setState({ product: theProduct }))
             .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
-            .catch(err => console.log(err))
+            .catch(err => new Error(err))
     }
     /*----ADD TO CART----*/
     addToCart = () => {
@@ -116,7 +116,7 @@ class ProductUpdateAdmin extends Component {
             .then(theCart => {
                 this.setState({ cart: theCart }, () => this.props.setTheCart(this.state.cart))
             })
-            .catch(err => console.log(err))
+            .catch(err => new Error(err))
     }
 
     updateUser = () => {
@@ -124,7 +124,7 @@ class ProductUpdateAdmin extends Component {
         userCopy.cart = this.state.cart
         this.userServices.updateUser(this.props.loggedInUser._id, this.state.user)
             .then(theUser => this.setState({ user: theUser }))
-            .catch(err => console.log(err))
+            .catch(err => new Error(err))
     }
 
     chooseProduct = (idx, price, size) => {
@@ -138,7 +138,7 @@ class ProductUpdateAdmin extends Component {
             quantity: this.state.choosedProduct.quantity,
             subtotal: productSubTotal
         }
-        this.setState({ choosedProduct: choosedProductCopy }, () => console.log(this.state.choosedProduct))
+        this.setState({ choosedProduct: choosedProductCopy }, () => new Error(this.state.choosedProduct))
     }
     handleQuantity = (action) => {
         let quantity = this.state.choosedProduct.quantity
@@ -152,7 +152,7 @@ class ProductUpdateAdmin extends Component {
     updateProduct = () => {
         this.productServices.updateProduct(this.props.match.params.id, this.state.product)
             .then(theProduct => this.setState({ product: theProduct }))
-            .catch(err => console.log(err))
+            .catch(err => new Error(err))
     }
 
     handleSubmit = async e => {
@@ -209,7 +209,6 @@ class ProductUpdateAdmin extends Component {
     }
 
     setVariants = () => {
-        console.log(this.state)
         let modelCopy = [...this.state.modelPrev]
         this.setState({
             product: { ...this.state.product, model: modelCopy },
@@ -236,7 +235,7 @@ class ProductUpdateAdmin extends Component {
                     product: { ...this.state.product, images: response.secure_url }
                 })
             })
-            .catch(err => console.log(err))
+            .catch(err => new Error(err))
     }
 
 

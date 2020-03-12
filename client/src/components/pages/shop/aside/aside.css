@@ -18,6 +18,18 @@
     margin: 20px auto 0 auto;
     width: 160px;
 }
+.home-aside{
+    width: 100%;
+    padding: 30px 10px;
+}
+
+.home-aside h5{
+    font-size: 1rem;
+    font-weight: 700;
+}
+.home-aside p{
+    font-size: 0.8rem;
+}
 
 @media (min-width: 768px){
     .main-aside{

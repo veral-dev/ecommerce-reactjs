@@ -29,7 +29,7 @@ class AsideUpsells extends Component {
 
     getAllProducts = () => {
         this.productServices.getAllProducts()
-            .then(allProducts => this.setState({ products: allProducts.splice(0, 4) }))
+            .then(allProducts => this.setState({ products: allProducts.splice(0, this.props.numberOfProducts) }))
             .catch(err => console.log(err))
     }
 
@@ -62,7 +62,7 @@ class AsideUpsells extends Component {
 
                 {this.state.products.length ? (
 
-                    <Row className="my-2">
+                    <Row className="my-2 px-3">
                         {this.state.products.map(elm => <ProductCard key={elm._id} {...elm} deleteProduct={() => this.deleteProduct(elm._id)} />)}
                     </Row>
 

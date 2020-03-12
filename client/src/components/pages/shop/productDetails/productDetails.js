@@ -313,7 +313,7 @@ class ProductUpdate extends Component {
 
                 </Container>
                 <AsideProductMain />
-                <AsideUpsells />
+                <AsideUpsells numberOfProducts="4" />
 
 
             </>
