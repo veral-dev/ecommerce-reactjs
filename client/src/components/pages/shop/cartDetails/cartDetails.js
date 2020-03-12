@@ -137,7 +137,7 @@ class CartDetails extends Component {
                             <TableRow>
                                 <TableCell colSpan={3}><strong>Total</strong></TableCell>
                                 <TableCell align="right"></TableCell>
-                                <TableCell align="right"><strong>{this.state.cart.total}€</strong></TableCell>
+                                <TableCell align="center"><strong>{this.state.cart.total}€</strong></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
