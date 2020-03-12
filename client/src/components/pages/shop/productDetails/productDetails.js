@@ -11,6 +11,10 @@ import FilesServices from '../../../../services/files.services'
 import CartServices from '../../../../services/cart.services'
 
 /* ----ROUTES----*/
+import AsideProductMain from '../aside/asideProduct'
+import AsideUpsells from '../aside/asideUpsells'
+
+
 // import { Link } from 'react-router-dom'
 
 import Breadcrumbs from '../../../ui/Breadcrumbs'
@@ -263,52 +267,56 @@ class ProductUpdate extends Component {
 
     render() {
         return (
-
-            <Container className="client-body">
-                <Row >
-                    <Col sm={12} md={6} className="product-img">
-                        <img src={this.state.mainImage} alt={this.state.product.name} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
-                        {this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100px", height: '100px', objectFit: 'cover', padding: '5px' }} />)}
-                    </Col>
-                    {/* TO-DO PREGUNTAR COMO HACER PARA QUE AL CAMBIAR LA PANTALLA CAMBIE YA QUE CREO QUE HAY QUE CAMBIAR EL ESTADO */}
-                    {/* {window.innerWidth > 768 ? (<Col sm={12} md={6} className="product-img">
+            <>
+                <Container className="client-body">
+                    <Row >
+                        <Col sm={12} md={6} className="product-img">
+                            <img src={this.state.mainImage} alt={this.state.product.name} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
+                            {this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100px", height: '100px', objectFit: 'cover', padding: '5px' }} />)}
+                        </Col>
+                        {/* TO-DO PREGUNTAR COMO HACER PARA QUE AL CAMBIAR LA PANTALLA CAMBIE YA QUE CREO QUE HAY QUE CAMBIAR EL ESTADO */}
+                        {/* {window.innerWidth > 768 ? (<Col sm={12} md={6} className="product-img">
                         {this.state.product.images !== 0 ? this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100%" }} />) : 'No hay imágenes cargadas'}</Col>)
                         : (<Col sm={12} md={6}>
                             <img src={this.state.product.images[0]} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
                             {this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100px", height: '100px', objectFit: 'cover', padding: '5px' }} />)}
                         </Col>)} */}
 
-                    <Col sm={12} md={6} className="product-main">
-                        <Breadcrumbs product={this.state.product.name} category={this.state.product.category} />
-                        <h1>{this.state.product.name}</h1>
-                        <p className="product-price">{this.state.pricePrev} €</p>
-                        <p>{this.state.product.excerpt}</p>
+                        <Col sm={12} md={6} className="product-main">
+                            <Breadcrumbs product={this.state.product.name} category={this.state.product.category} />
+                            <h1>{this.state.product.name}</h1>
+                            <p className="product-price">{this.state.pricePrev} €</p>
+                            <p>{this.state.product.excerpt}</p>
+                            <p className="size-details">Selecciona medida</p>
+                            <hr></hr>
+                            {this.state.product.model.map((elm, idx) => (
+                                <Button key={idx} className="product-selection" id={elm._id} variant="outline" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>{elm.size}</Button>
 
-                        {this.state.product.model.map((elm, idx) => (
-                            <Button key={idx} className="product-selection" id={elm._id} variant="outline" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>{elm.size}</Button>
 
+                            ))}
 
-                        ))}
-
-                        <div className="addToCart d-flex my-3">
-                            <div className="quantity d-flex align-items-center">
-                                <IconButton onClick={() => this.handleQuantity('rest')} aria-label="Restar cantidad">
-                                    <RemoveCircleOutlineIcon />
-                                </IconButton>
-                                {this.state.choosedProduct.quantity}
-                                <IconButton onClick={() => this.handleQuantity('sum')} aria-label="Sumar cantidad">
-                                    <AddCircleOutlineIcon />
-                                </IconButton>
+                            <div className="addToCart d-flex my-3">
+                                <div className="quantity d-flex align-items-center">
+                                    <IconButton onClick={() => this.handleQuantity('rest')} aria-label="Restar cantidad">
+                                        <RemoveCircleOutlineIcon />
+                                    </IconButton>
+                                    {this.state.choosedProduct.quantity}
+                                    <IconButton onClick={() => this.handleQuantity('sum')} aria-label="Sumar cantidad">
+                                        <AddCircleOutlineIcon />
+                                    </IconButton>
+                                </div>
+                                <Button variant="warning" className="add-cart-btn" onClick={() => this.addToCart(this.state.product._id)}>Añadir al carrito</Button>
                             </div>
-                            <Button variant="warning" size="medium" onClick={() => this.addToCart(this.state.product._id)}>Comprar producto</Button>
-                        </div>
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
 
 
-            </Container>
+                </Container>
+                <AsideProductMain />
+                <AsideUpsells />
 
 
+            </>
 
 
             // <Container className="client-body">

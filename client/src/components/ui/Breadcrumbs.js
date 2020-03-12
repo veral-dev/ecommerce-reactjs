@@ -17,9 +17,6 @@ const ProductCard = ({ product, category }) => {
     return (
         <Breadcrumbs style={{ fontSize: '12px' }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <Link color="inherit" href="/">
-                <HomeOutlinedIcon />
-            </Link>
-            <Link color="inherit" href="/">
                 {category}
             </Link>
             <Typography style={{ fontSize: '12px' }}>{product}</Typography>

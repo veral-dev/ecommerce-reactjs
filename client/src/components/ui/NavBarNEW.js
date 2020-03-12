@@ -22,10 +22,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
-import Button from '@material-ui/core/Button';
 
-
-// import VisibleItemList from '../containers/VisibleItemList'
 const drawerWidth = 300;
 const useStyles = makeStyles(theme => ({
     root: {

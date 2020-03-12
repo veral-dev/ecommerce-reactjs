@@ -41,8 +41,7 @@ class UserFormCheckout extends Component {
     }
 
     componentDidMount = () => {
-        this.setState({ user: this.props.loggedInUser })
-        console.log(this.state.user)
+      
     }
 
     componentDidUpdate(prevProps) {
@@ -61,7 +60,8 @@ class UserFormCheckout extends Component {
         let { name, value } = e.target
         this.setState({
             user: { ...this.state.user, [name]: value }
-        })
+        }, () => this.props.setTheUser(this.state.user))
+        
     }
 
 
@@ -149,7 +149,7 @@ class UserFormCheckout extends Component {
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
-                        <TextField id="state" name="state" label="Provincia/Región" fullWidth />
+                        <TextField id="state" name="state" value={this.state.user.state} label="Provincia/Región" fullWidth onChange={this.handleChange} />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <TextField
@@ -199,6 +199,7 @@ class UserFormCheckout extends Component {
                     </Button>
                     {/* <Button className="mx-auto mt-2" variant="outline-dark">Guardar dirección</Button> */}
                 </Grid>
+
             </>
         )
     }

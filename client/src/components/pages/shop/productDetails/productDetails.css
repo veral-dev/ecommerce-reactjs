@@ -4,14 +4,23 @@
     text-transform: uppercase;
     font-weight: 700;
 }
+
+.product-main hr{
+    margin: 0;
+}
 .product-price{
     font-size: 1.6rem;
 }
-.product-selection{
+.size-details{
+font-size: 12px;
+margin-top: 20px;
+}
+.add-cart-btn{
     width: 100%;
+    text-transform: uppercase;
 }
 .selected{
-    background-color: green;
+    background-color: #fdd1006b;
 }
 @media (max-width: 768px){
 .product-img{
@@ -24,7 +33,3 @@
     padding-top: 20px;
 }
 }
-
-/* .client-product{
-    padding-left: 50px;
-} */

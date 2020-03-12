@@ -70,7 +70,7 @@ class ShopProductsList extends Component {
                         </Col>
                         <Col sm={4}>
 
-                            {this.props.loggedInUser && <Link className="float-right mobile-button" to="/admin/products/create">
+                            {this.props.loggedInUser.role === 'admin' && <Link className="float-right mobile-button" to="/admin/products/create">
 
                                 <Fab style={{ backgroundColor: '#4caf50' }} aria-label="add">
                                     <AddIcon />

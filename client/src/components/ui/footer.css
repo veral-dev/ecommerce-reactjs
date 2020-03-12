@@ -1,0 +1,19 @@
+footer{
+    padding: 50px 10px;
+}
+footer li{
+    list-style: none;
+}
+.footer-color{
+    background-color: #0000000a;
+}
+.copyright{
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (min-width: 768px){
+    footer{
+        padding: 50px 200px
+    }
+}

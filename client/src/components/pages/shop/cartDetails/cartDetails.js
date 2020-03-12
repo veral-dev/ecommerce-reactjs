@@ -9,7 +9,7 @@ import UserServices from '../../../../services/user.services'
 import CartServices from '../../../../services/cart.services'
 
 /* ----ROUTES----*/
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
@@ -66,14 +66,7 @@ class CartDetails extends Component {
 
     handleQuantity = (action, id) => {
         let cartCopy = { ...this.state.cart }
-        console.log(cartCopy.products[id])
-
-        // let quantity = 0
-        // if (cartCopy.products[id].quantity) quantity = cartCopy.products[id].quantity
-        // quantity = cartCopy.products[id].quantity ? cartCopy.products[id].quantity : quantity
         let quantity = cartCopy.products[id].quantity || 0
-
-
 
         if (action === 'rest') { if (quantity > 1) { quantity-- } else { this.deleteFromCart(id) } } else { if (quantity < 10) { quantity++ } }
 
@@ -105,47 +98,6 @@ class CartDetails extends Component {
             .then(() => console.log(this.state.cart))
             .catch(err => console.log(err))
     }
-
-
-    /*----LOAD PRODUCTS----*/
-    // getProductDetails = () => {
-    //     this.productServices.getProductDetails(this.props.match.params.id)
-    //         .then(theProduct => this.setState({ product: theProduct }))
-    //         .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
-    //         .catch(err => console.log(err))
-    // }
-
-    /*----UPDATE USER----*/
-    // updateUser = () => {
-    //     let userCopy = this.state.user
-    //     userCopy.cart = this.state.cart
-    //     this.userServices.updateUser(this.props.loggedInUser._id, this.state.user)
-    //         .then(theUser => this.setState({ user: theUser }))
-    //         .catch(err => console.log(err))
-    // }
-
-
-    /*----EDIT PRODUCT----*/
-    // updateProduct = () => {
-    //     this.productServices.updateProduct(this.props.match.params.id, this.state.product)
-    //         .then(theProduct => this.setState({ product: theProduct }))
-    //         .catch(err => console.log(err))
-    // }
-
-    // handleSubmit = async e => {
-    //     e.preventDefault()
-    //     await this.setVariants()
-    //     this.updateProduct()
-    //     this.toggleToast()
-    // }
-
-    // handleChange = e => {
-    //     let { name, value } = e.target
-    //     this.setState({
-    //         product: { ...this.state.product, [name]: value }
-    //     })
-    // }
-
 
 
     render() {
@@ -193,8 +145,9 @@ class CartDetails extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </Container>
+                <Link as="button" className="btn btn-outline-dark btn-checkout float-right" to="/finalizar-compra" onClick={this.props.handleClose}>Finalizar compra</Link>
 
+            </Container>
 
         )
     }

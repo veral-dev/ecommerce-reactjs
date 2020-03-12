@@ -124,8 +124,6 @@ class Navigation extends Component {
                             <Nav className="mx-auto responsive-navbar">
                                 <img src="/Relakso-Logo-BL.png" alt="Relakso ReactJS Ecommerce" />
 
-
-
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/products/create">Crear producto</Link>
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/products-list">Lista de productos</Link>
                                 <Link as="div" onClick={() => this.toggle("showDrawer")} to="/admin/users/users-list">Lista de usuarios</Link>
@@ -143,64 +141,11 @@ class Navigation extends Component {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={this.handleClose}
-                    PaperProps={{ style: { transform: 'translateY(30%)' } }} >
-                    <CartDetails loggedInUser={this.props.loggedInUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
+                    PaperProps={{ style: { transform: 'translateY(20%)' } }} >
+
+                    <CartDetails loggedInUser={this.props.loggedInUser} handleClose={this.handleClose} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
                 </Menu>
             </div>
-
-            // this.props.loggedInUser ?
-            //     (
-            //         <>
-            //             <Navbar bg="dark" expand="lg" variant="dark">
-            //                 <Navbar.Brand href="#home">Relakso e-Commerce</Navbar.Brand>
-            //                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            //                 <Navbar.Collapse id="basic-navbar-nav">
-            //                     <Nav className="ml-auto">
-            //                         <Nav.Link as="div"> <Link to="/">Inicio</Link></Nav.Link>
-            //                         <Nav.Link as="div"> <Link to="/profile">Perfil</Link></Nav.Link>
-            //                         <Nav.Link as="div"> <Link to="/admin/products/create">Crear producto</Link></Nav.Link>
-            //                         <Nav.Link as="div"> <Link to="/admin/products/products-list">Lista de productos</Link></Nav.Link>
-            //                         <Nav.Link as="div"> <Link to="/admin/users/users-list">Lista de usuarios</Link></Nav.Link>
-            //                         <Nav.Link as="div"> <Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link>
-            //                         <Nav.Link as="div"> <Link to="/cuenta/editar">Editar mi cuenta</Link></Nav.Link>
-            //                         <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link>
-            //                         <Nav.Link as="div">{greeting}</Nav.Link>
-
-            //                         <Button as="div" aria-controls="fade-menu" aria-haspopup="false" onClick={this.handleMenu}>
-            //                             <Badge color="secondary" badgeContent={this.state.cartIcon}>
-            //                                 <LocalMallOutlinedIcon />
-            //                             </Badge>
-            //                         </Button>
-            //                     </Nav>
-            //                 </Navbar.Collapse>
-            //             </Navbar>
-
-            //             <Menu id="fade-menu" keepMounted TransitionComponent={Fade}
-            //                 anchorEl={anchorEl}
-            //                 open={open}
-            //                 onClose={this.handleClose}
-            //                 PaperProps={{ style: { transform: 'translateY(15%)' } }} >
-            //                 <CartDetails loggedInUser={this.props.loggedInUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
-            //             </Menu>
-            //         </>
-            //     )
-            //     :
-            //     (
-            //         <Navbar bg="dark" expand="lg" variant="dark">
-            //             <Navbar.Brand href="#home">Relakso e-Commerce</Navbar.Brand>
-            //             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            //             <Navbar.Collapse id="basic-navbar-nav">
-            //                 <Nav className="ml-auto">
-            //                     <Nav.Link as="div"> <Link to="/">Inicio</Link></Nav.Link>
-            //                     <Nav.Link as="div"> <Link to="/signup">Registro</Link></Nav.Link>
-            //                     <Nav.Link as="div"> <Link to="/login">Inicio sesión</Link></Nav.Link>
-            //                     <Nav.Link as="div">{greeting}</Nav.Link>
-            //                 </Nav>
-            //             </Navbar.Collapse>
-            //         </Navbar>
-            //     )
-
-
 
         )
     }

@@ -83,6 +83,11 @@ class Checkout extends Component {
             .catch(err => console.log(err))
     }
 
+    setTheUser = userObj => {
+        console.log(userObj)
+        this.setState({ user: userObj })
+    }
+
 
     /*----LOAD PRODUCTS----*/
     // getProductDetails = () => {
@@ -135,11 +140,13 @@ class Checkout extends Component {
 
                 <h1 className="mt-3 text-center">Finalizar compra</h1>
                 <section className="mt-3">
-                    <UserFormCheckout loggedInUser={this.props.loggedInUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
+                    <UserFormCheckout loggedInUser={this.props.loggedInUser} setTheUser={this.setTheUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
                 </section>
                 <section>
                     <CartDetails loggedInUser={this.props.loggedInUser} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
                 </section>
+                <br></br><br></br><br></br><br></br><br></br>
+
             </Container>
 
 

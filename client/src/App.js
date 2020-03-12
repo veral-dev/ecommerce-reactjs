@@ -12,6 +12,7 @@ import UserServices from './services/user.services'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import NavBar from './components/ui/NavBar'
+import Footer from './components/ui/footer'
 
 import Home from './components/pages/shop/home/home'
 import Signup from './components/pages/auth/signup/Signup'
@@ -42,10 +43,8 @@ class App extends Component {
 
   }
 
-
   componentDidUpdate = (prevProps, prevState) => console.log('DidUpdate App', this.state)
   componentDidMount = () => this.fetchUser()
-
 
   setTheUser = userObj => this.setState({ loggedInUser: userObj })
 
@@ -53,11 +52,8 @@ class App extends Component {
     let localCartId = localStorage.getItem('guestCart')
     this.authServices.loggedin()
       .then(theUser => { this.setState({ loggedInUser: theUser }); theUser.cart ? this.fetchCart(theUser.cart) : this.postCart(this.state.userCart) })
-      // .then(() => { this.state.loggedInUser.cart ? this.fetchCart(this.state.loggedInUser.cart) : this.postCart() })
       .catch(() => { this.setState({ loggedInUser: false }); localCartId ? this.fetchCart(localCartId) : this.postCart(this.state.userCart) })
   }
-
-  // if (this.props.userCart.length === 0) this.postCart()
 
   setTheCart = userCart => this.setState({ userCart: userCart })
 
@@ -80,8 +76,6 @@ class App extends Component {
     this.cartServices.getUserCart(cartId)
       .then(theCart => this.setState({ userCart: theCart }))
       .catch(() => this.postCart(this.state.userCart))
-
-    // .catch(() => this.setState({ userCart: false }))
   }
 
 
@@ -93,23 +87,27 @@ class App extends Component {
         <main>
           <Switch>
             <Route exact path="/" render={() => <Home loggedInUser={this.state.loggedInUser} />} />
+
             <Route path="/signup" render={() => <Signup setTheUser={this.setTheUser} />} />
             <Route path="/login" render={props => <Login setTheUser={this.setTheUser} {...props} />} />
-            <Route path="/admin/products/create" render={() => this.state.loggedInUser ? <CreateProduct loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
-            <Route path="/admin/products-list" render={() => this.state.loggedInUser ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
-            <Route path="/admin/editar-producto/:id" render={props => <EditProduct loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
+
+            <Route path="/admin/products/create" render={() => this.state.loggedInUser.role === 'admin' ? <CreateProduct loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/products-list" render={() => this.state.loggedInUser.role === 'admin' ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/editar-producto/:id" render={props => this.state.loggedInUser.role === 'admin' ? <EditProduct loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} /> : <Redirect to="/" />} />
+            <Route path="/admin/users/users-list" render={() => this.state.loggedInUser.role === 'admin' ? <UsersList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/users/create-user" render={() => this.state.loggedInUser.role === 'admin' ? <CreateUser loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/coleccion" render={() => this.state.loggedInUser.role === 'admin' ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
 
             <Route path="/productos/:id" render={props => <ProductDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
-            <Route path="/coleccion" render={() => this.state.loggedInUser ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <ShopProductsList loggedInUser={this.state.loggedInUser} />} />
+            <Route path="/coleccion" render={props => <ShopProductsList loggedInUser={this.state.loggedInUser} {...props} />} />
 
             <Route path="/cart" render={props => <CartDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
-            <Route path="/checkout" render={props => <Checkout loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
+            <Route path="/finalizar-compra" render={props => <Checkout loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
 
-            <Route path="/admin/users/users-list" render={() => this.state.loggedInUser ? <UsersList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
-            <Route path="/admin/users/create-user" render={() => this.state.loggedInUser ? <CreateUser loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
             <Route path="/cuenta/editar/:id" render={() => this.state.loggedInUser ? <UserUpdate loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
           </Switch>
         </main>
+        <Footer />
       </div>
 
     )
