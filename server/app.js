@@ -28,6 +28,8 @@ app.use('/api/products', require('./routes/products.routes'))
 app.use('/api/users', require('./routes/users.routes'))
 app.use('/api/files', require('./routes/files.routes'))
 app.use('/api/carts', require('./routes/cart.routes'))
+app.use('/api/invoices', require('./routes/invoices.routes'))
+
 
 
 app.use((req, res) => { res.sendFile(__dirname + "/public/index.html") })

@@ -94,7 +94,6 @@ class CartDetails extends Component {
             .then(theCart => {
                 this.setState({ cart: theCart }, () => this.props.setTheCart(this.state.cart))
             })
-            .then(() => console.log(this.state.cart))
             .catch(err => console.log(err))
     }
 

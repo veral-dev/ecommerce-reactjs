@@ -84,7 +84,6 @@ class Checkout extends Component {
     }
 
     setTheUser = userObj => {
-        console.log(userObj)
         this.setState({ user: userObj })
     }
 

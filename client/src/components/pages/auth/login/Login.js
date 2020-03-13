@@ -13,7 +13,6 @@ import AuthServices from '../../../../services/auth.services'
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -69,7 +68,6 @@ class Login extends Component {
         return (
 
             <Container maxWidth="xs">
-                <CssBaseline />
                 <div className="paper">
                     <Avatar className="avatar" style={{ backgroundColor: '#fdd100' }}>
                         <LockOutlinedIcon />
@@ -115,7 +113,7 @@ class Login extends Component {
                                 This is a success message!
                             </Alert>
                         </Snackbar> */}
-                        <Toast className="mt-3" style={{ backgroundColor : 'red' }} onClose={() => this.toggle("showError")} show={this.state.showError} delay={3000} autohide>
+                        <Toast className="mt-3" style={{ backgroundColor: 'red' }} onClose={() => this.toggle("showError")} show={this.state.showError} delay={3000} autohide>
                             <Toast.Header>
                                 <strong className="mr-auto">{this.state.errorMessage}</strong>
                             </Toast.Header>

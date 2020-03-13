@@ -1,7 +1,8 @@
 import React from 'react'
 
 /* ----ROUTES----*/
-import { Link } from 'react-router-dom'
+import Link from '@material-ui/core/Link';
+
 
 /* ----STYLE----*/
 import './productList.css'
@@ -9,7 +10,7 @@ import './productList.css'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 
-export default function MediaCard({ name, images, excerpt, category, tags, model, _id, deleteProduct }) {
+export default function ProductCard({ name, images, excerpt, category, tags, model, _id, deleteProduct }) {
 
     return (
 
@@ -17,12 +18,12 @@ export default function MediaCard({ name, images, excerpt, category, tags, model
         <Col className="col-card-shop" xs={6} md={4} lg={3}>
             <Card className="product-card-shop">
                 <div className="position-relative">
-                    <Link to={`/productos/${_id}`}><Card.Img variant="top" src={images[0]} /></Link>
+                    <Link href={`/productos/${_id}`}><Card.Img variant="top" src={images[0]} /></Link>
                     {/* <p className="btn addCartList">Añadir a la cesta</p> */}
                 </div>
 
                 <Card.Body>
-                    <Link to={`/productos/${_id}`}><Card.Title>{name}</Card.Title></Link>
+                    <Link href={`/productos/${_id}`}><Card.Title>{name}</Card.Title></Link>
                     <Card.Text className="product-list-price">{model[0].price} €</Card.Text>
                 </Card.Body>
             </Card>

@@ -47,9 +47,8 @@ class UserFormCheckout extends Component {
 
 
     updateUser = () => {
-        console.log('post user1', this.state.user)
         this.UserServices.updateUser(this.state.user._id, this.state.user)
-            .then(theUser => console.log('post user2', theUser))
+            .then(theUser => this.setState({ user: theUser }))
             .catch(err => console.log(err))
     }
 

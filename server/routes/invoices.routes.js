@@ -1,18 +1,19 @@
 const express = require('express')
 const router = express.Router()
 
-const Cart = require('../models/Cart.model')
-const Product = require('../models/Product.model')
+const Invoice = require('../models/Invoice.model')
+const User = require('../models/User.model')
+const Product = require('../models/Cart.model')
 
 
 router.get('/getAllCarts', (req, res, next) => {
-    Cart.find()
-        .then(allCarts => res.json(allCarts))
+    Invoice.find()
+        .then(allInvoices => res.json(allInvoices))
         .catch(err => next(err))
 })
 
-router.get('/getUserCart/:cartId', (req, res, next) => {
-    Cart.findById(req.params.cartId)
+router.get('/getUserInvoice/:InvoiceId', (req, res, next) => {
+    Invoice.findById(req.params.InvoiceId)
         .populate({
             path: 'products.product',
             populate: {
@@ -20,21 +21,21 @@ router.get('/getUserCart/:cartId', (req, res, next) => {
                 model: 'Product'
             }
         })
-        .then(theCart => res.json(theCart))
+        .then(theInvoice => res.json(theInvoice))
         .catch(err => next(err))
 })
 
 router.post('/new', (req, res, next) => {
-    Cart.create(req.body)
-        .then(theCart => res.json(theCart))
+    Invoice.create(req.body)
+        .then(theInvoice => res.json(theInvoice))
         .catch(err => next(err))
 })
 
 router.post('/search', (req, res, next) => {
-    const cartSearch = req.body.search
-    Cart.find({
+    const invoiceSearch = req.body.search
+    Invoice.find({
         "name": {
-            $regex: `.*${cartSearch}.*`,
+            $regex: `.*${invoiceSearch}.*`,
             $options: 'i'
         }
     })
@@ -44,7 +45,7 @@ router.post('/search', (req, res, next) => {
 })
 
 router.put('/update/:id', (req, res, next) => {
-    Cart.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    Invoice.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .populate({
             path: 'products.product',
             populate: {
@@ -52,13 +53,13 @@ router.put('/update/:id', (req, res, next) => {
                 model: 'Product'
             }
         })
-        .then(theCart => res.json(theCart))
+        .then(theInvoice => res.json(theInvoice))
         .catch(err => next(err))
 
 })
 
 router.delete('/delete/:id', (req, res, next) => {
-    Cart.findByIdAndDelete(req.params.id)
+    Invoice.findByIdAndDelete(req.params.id)
         .then(() => res.json({ message: 'Carrito borrado' }))
         .catch(err => next(err))
 })

@@ -17,7 +17,9 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import Spinner from 'react-bootstrap/Spinner'
 
 class ShopProductsList extends Component {
@@ -57,6 +59,11 @@ class ShopProductsList extends Component {
         this.searchProduct(value)
     }
 
+    sortByPrice = () => {
+        let productsCopy = [...this.state.products]
+        productsCopy.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
+        this.setState({ products: productsCopy })
+    }
     render() {
 
         return (
@@ -66,7 +73,7 @@ class ShopProductsList extends Component {
 
                     <Row className="mb-3">
                         <Col sm={8}>
-                            <h1>Listado de productos</h1>
+                            <h1>Colección</h1>
                         </Col>
                         <Col sm={4}>
 
@@ -80,7 +87,10 @@ class ShopProductsList extends Component {
                     <input className="form-control mr-sm-2 mb-2" value={this.productsSearched} type="search" name="search" placeholder="Buscar" aria-label="Search"
                         id="index-input" onChange={this.handleChangeSearch} />
 
-                    <p className="d-flex justify-content-end">{this.state.products.length} Artículos</p>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <p className="m-0">{this.state.products.length} Artículos</p>
+                        <div className="d-flex align-items-center"><p className="my-0 ml-5">Ordernar por nombre</p><IconButton onClick={this.sortByPrice}><FilterListIcon /></IconButton></div>
+                    </div>
 
                     {this.state.products.length ? (
 

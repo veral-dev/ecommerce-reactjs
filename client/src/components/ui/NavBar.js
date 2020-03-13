@@ -48,7 +48,6 @@ class Navigation extends Component {
     }
 
     logout = () => {
-        this.toggle("showDrawer")
         this.authServices.logout()
             .then(response => { this.props.setTheUser(false) })
             .catch(err => console.log(err))
@@ -89,14 +88,15 @@ class Navigation extends Component {
                                 <Nav.Link as="div"><Link to="/coleccion">Colección</Link></Nav.Link>
                                 {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/products-list">Lista de productos</Link></Nav.Link> : null}
                                 {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link> : null}
-                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to="/cuenta/editar">Editar mi cuenta</Link></Nav.Link> : null}
+                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to={`/cuenta/editar/${this.props.loggedInUser._id}`}>Editar mi cuenta</Link></Nav.Link> : null}
+                                {!this.props.loggedInUser ? <Nav.Link as="div"><Link to="/signup">Crear cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Hidden>
 
                         <div className="fitcontent-width">
                             <IconButton aria-controls="fade-menu" aria-haspopup="false" >
-                                {this.props.loggedInUser ? <Link style={{ fontSize: '1rem' }} to="/profile"><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link> : <Link style={{ fontSize: '1rem' }} to="/login"><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link>}
+                                {this.props.loggedInUser ? <Link style={{ fontSize: '1rem' }} to={`/cuenta/editar/${this.props.loggedInUser._id}`}><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link> : <Link style={{ fontSize: '1rem' }} to="/login"><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link>}
                             </IconButton>
                             <IconButton aria-controls="fade-menu" aria-haspopup="false" onClick={this.handleMenu} >
                                 <Badge color="secondary" badgeContent={this.state.cartIcon}>
@@ -125,7 +125,8 @@ class Navigation extends Component {
                                 <Nav.Link as="div"><Link to="/coleccion" onClick={() => this.toggle("showDrawer")}>Colección</Link></Nav.Link>
                                 {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/products-list" onClick={() => this.toggle("showDrawer")}>Lista de productos</Link></Nav.Link> : null}
                                 {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/users/create-user" onClick={() => this.toggle("showDrawer")}>Crear usuario</Link></Nav.Link> : null}
-                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to="/cuenta/editar" onClick={() => this.toggle("showDrawer")}>Editar mi cuenta</Link></Nav.Link> : null}
+                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to={`/cuenta/editar/${this.props.loggedInUser._id}`} onClick={() => this.toggle("showDrawer")}>Editar mi cuenta</Link></Nav.Link> : null}
+                                {!this.props.loggedInUser ? <Nav.Link as="div"><Link to="/signup" onClick={() => this.toggle("showDrawer")}>Crear cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Drawer>

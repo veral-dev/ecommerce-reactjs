@@ -101,10 +101,10 @@ class App extends Component {
             <Route path="/productos/:id" render={props => <ProductDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
             <Route path="/coleccion" render={props => <ShopProductsList loggedInUser={this.state.loggedInUser} {...props} />} />
 
-            <Route path="/cart" render={props => <CartDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
+            <Route path="/carrito" render={props => <CartDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
             <Route path="/finalizar-compra" render={props => <Checkout loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
 
-            <Route path="/cuenta/editar/:id" render={() => this.state.loggedInUser ? <UserUpdate loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/cuenta/editar/:id" render={props => this.state.loggedInUser ? <UserUpdate loggedInUser={this.state.loggedInUser} setTheUser={this.setTheUser} {...props}/> : <Redirect to="/" />} />
           </Switch>
         </main>
         <Footer />

@@ -1,7 +1,18 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const cartSchema = new Schema({
+const invoicesSchema = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    invoiceNumber: String,
+    name: { type: String },
+    lastName: { type: String },
+    address1: { type: String },
+    address2: String,
+    zipCode: { type: String },
+    city: { type: String },
+    state: { type: String },
+    country: String,
+    phone: { type: Number },
     products: [{
         product: { type: Schema.Types.ObjectId, ref: 'Product', required: true, },
         model: { type: Schema.Types.ObjectId, ref: "Product.model", required: true, },
@@ -12,10 +23,10 @@ const cartSchema = new Schema({
         subtotal: { type: Number },
     }],
     total: { type: Number, default: 0 },
-    cartIconQuantity: { type: Number },
+
 }, {
     timestamps: true
 })
 
-const Cart = mongoose.model('Cart', cartSchema)
-module.exports = Cart
+const Invoice = mongoose.model('Invoice', invoicesSchema)
+module.exports = Invoice

@@ -13,7 +13,6 @@ import AuthServices from '../../../../services/auth.services'
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -57,11 +56,6 @@ class Signup extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        //Validación en front, TO-DO
-        // if (this.state.password.length < 6 || !this.state.email.match(/[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}/)) {
-        //     this.setState({ errorMessage: 'RELLENA LOS CAMPOS' })
-        //     return
-        // }
         this.postUser()
     }
 
@@ -73,7 +67,6 @@ class Signup extends Component {
 
 
             <Container maxWidth="xs">
-                <CssBaseline />
                 <div className="paper">
                     <Avatar className="avatar" style={{ backgroundColor: '#fdd100' }}>
                         <LockOutlinedIcon />
