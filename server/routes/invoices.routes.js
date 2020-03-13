@@ -12,17 +12,20 @@ router.get('/getAllCarts', (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get('/getUserInvoice/:InvoiceId', (req, res, next) => {
-    Invoice.findById(req.params.InvoiceId)
-        .populate({
-            path: 'products.product',
-            populate: {
-                path: 'product',
-                model: 'Product'
-            }
-        })
-        .then(theInvoice => res.json(theInvoice))
-        .catch(err => next(err))
+router.get('/getOneInvoice', (req, res, next) => {
+    console.log('AQUí', req.query)
+
+
+    // Invoice.findById(req.query.order)
+    // .populate({
+    //     path: 'products.product',
+    //     populate: {
+    //         path: 'product',
+    //         model: 'Product'
+    //     }
+    // })
+    // .then(theInvoice => res.json(theInvoice))
+    // .catch(err => next(err))
 })
 
 router.post('/new', (req, res, next) => {

@@ -16,8 +16,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
-
-
+import Toast from 'react-bootstrap/Toast'
 
 class UserUpdate extends Component {
     constructor(props) {
@@ -213,17 +212,21 @@ class UserUpdate extends Component {
                     <Button onClick={this.handleSubmit} variant="outlined" className="ml-2 mt-4" size="small" startIcon={<SaveIcon />}>
                         Guardar dirección
                     </Button>
+                    <Toast style={{ backgroundColor: "green" }} onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">La información ha sido modificada</strong>
+                        </Toast.Header>
+                    </Toast>
                     {/* <Button className="mx-auto mt-2" variant="outline-dark">Guardar dirección</Button> */}
                 </Grid>
 
-                {/* <UserFormCheckout />
                 <form onSubmit={this.handleSubmit} autoComplete="off">
-                    <TextField className="mx-4" id="standard-basic" value={this.state.user.name} label="Nombre" type="text" name="name" onChange={this.handleChange} />
+                    <TextField className="mx-4" id="standard-basic" value={this.state.user.address1} label="Nombre" type="text" name="address1" onChange={this.handleChange} />
                     <TextField className="mx-4" id="standard-basic" value={this.state.user.lastName} label="Apellidos" type="text" name="lastName" onChange={this.handleChange} />
                     <TextField className="mx-4" id="standard-basic" value={this.state.user.role} label="Rol" type="text" name="role" onChange={this.handleChange} />
                     <TextField className="mx-4" id="standard-basic" value={this.state.user.city} label="Ciudad" type="text" name="city" onChange={this.handleChange} />
 
-                </form> */}
+                </form>
 
                 {/* <Button variant="outline-success" type="submit" size="lg" block onClick={this.handleSubmit}>Modificar usuario</Button> */}
 

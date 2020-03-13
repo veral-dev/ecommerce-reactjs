@@ -354,13 +354,13 @@ class ProductUpdateAdmin extends Component {
 
                 <Button variant="outline-success" type="submit" size="lg" block onClick={this.handleSubmit}>Modificar producto</Button>
 
-                <Toast onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
+                <Toast style={{ backgroundColor: "green" }} onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
                     <Toast.Header>
                         <strong className="mr-auto">El producto ha sido modificado</strong>
                     </Toast.Header>
                 </Toast>
                 <Button as="div" variant="dark" size="sm">
-                    <Link to="/admin/products-list">Volver al listado de productos</Link>
+                    <Link to="/admin/lista-productos">Volver al listado de productos</Link>
                 </Button>
 
                 <div className="addToCart d-flex my-3 float-right">

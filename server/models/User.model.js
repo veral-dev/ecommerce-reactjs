@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -21,7 +20,7 @@ const userSchema = new Schema({
   phone: { type: Number },
   wishlist: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   cart: { type: Schema.Types.ObjectId, ref: 'Cart' },
-  invoice: { type: Schema.Types.ObjectId, ref: 'Invoice' },
+  invoices: [{ type: Schema.Types.ObjectId, ref: 'Invoice' }],
 }, {
   timestamps: true
 })

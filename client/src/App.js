@@ -27,6 +27,7 @@ import UserUpdate from './components/pages/shop/userUpdate/userUpdate'
 import ProductDetails from './components/pages/shop/productDetails/productDetails';
 import CartDetails from './components/pages/shop/cartDetails/cartDetails'
 import Checkout from './components/pages/shop/checkout/checkout'
+import OrderDetails from './components/pages/shop/orderDetails/orderDetails'
 import ShopProductsList from './components/pages/shop/productList/shopProductList'
 
 
@@ -89,22 +90,23 @@ class App extends Component {
             <Route exact path="/" render={() => <Home loggedInUser={this.state.loggedInUser} />} />
 
             <Route path="/signup" render={() => <Signup setTheUser={this.setTheUser} />} />
-            <Route path="/login" render={props => <Login setTheUser={this.setTheUser} {...props} />} />
+            <Route path="/login" render={props => <Login setTheUser={this.setTheUser} fetchCart={this.fetchCart} postCart={this.postCart} {...props} />} />
 
-            <Route path="/admin/products/create" render={() => this.state.loggedInUser.role === 'admin' ? <CreateProduct loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
-            <Route path="/admin/products-list" render={() => this.state.loggedInUser.role === 'admin' ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/productos/crear" render={() => this.state.loggedInUser.role === 'admin' ? <CreateProduct loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/lista-productos" render={() => this.state.loggedInUser.role === 'admin' ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
             <Route path="/admin/editar-producto/:id" render={props => this.state.loggedInUser.role === 'admin' ? <EditProduct loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} /> : <Redirect to="/" />} />
-            <Route path="/admin/users/users-list" render={() => this.state.loggedInUser.role === 'admin' ? <UsersList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
-            <Route path="/admin/users/create-user" render={() => this.state.loggedInUser.role === 'admin' ? <CreateUser loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/usuarios/lista-usuarios" render={() => this.state.loggedInUser.role === 'admin' ? <UsersList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
+            <Route path="/admin/usuarios/create-usuario" render={() => this.state.loggedInUser.role === 'admin' ? <CreateUser loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
             <Route path="/admin/coleccion" render={() => this.state.loggedInUser.role === 'admin' ? <ProductsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
 
             <Route path="/productos/:id" render={props => <ProductDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />
             <Route path="/coleccion" render={props => <ShopProductsList loggedInUser={this.state.loggedInUser} {...props} />} />
 
             <Route path="/carrito" render={props => <CartDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
-            <Route path="/finalizar-compra" render={props => <Checkout loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
+            <Route path="/finalizar-compra" render={props => <Checkout loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} setTheUser={this.setTheUser} userCart={this.state.userCart} {...props} />} />}
+            <Route path="/pedido-confirmado" render={props => <OrderDetails loggedInUser={this.state.loggedInUser} setTheCart={this.setTheCart} userCart={this.state.userCart} {...props} />} />}
 
-            <Route path="/cuenta/editar/:id" render={props => this.state.loggedInUser ? <UserUpdate loggedInUser={this.state.loggedInUser} setTheUser={this.setTheUser} {...props}/> : <Redirect to="/" />} />
+            <Route path="/cuenta/editar/:id" render={props => this.state.loggedInUser ? <UserUpdate loggedInUser={this.state.loggedInUser} setTheUser={this.setTheUser} {...props} /> : <Redirect to="/" />} />
           </Switch>
         </main>
         <Footer />

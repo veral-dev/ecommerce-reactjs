@@ -9,6 +9,8 @@ import './checkout.css'
 import ProductServices from '../../../../services/product.services'
 import UserServices from '../../../../services/user.services'
 import CartServices from '../../../../services/cart.services'
+import InvoiceServices from '../../../../services/invoice.services'
+
 
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
@@ -24,6 +26,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Toast from 'react-bootstrap/Toast'
+
 /* ----ICONS---- */
 
 
@@ -34,22 +38,27 @@ class Checkout extends Component {
         this.productServices = new ProductServices()
         this.userServices = new UserServices()
         this.cartServices = new CartServices()
+        this.invoiceServices = new InvoiceServices()
+
 
         this.state = {
             user: {},
             cart: {},
+            errMessage: '',
             choosedProduct: { product: '', model: '', quantity: 1 },
             showtoast: false,
-            showmodal: false,
         }
     }
 
 
     componentDidMount = () => {
+        if (this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
+        if (this.props.userCart._id) this.setState({ cart: this.props.userCart })
 
     }
 
     componentDidUpdate(prevProps) {
+        if (prevProps.loggedInUser._id !== this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
         if (prevProps.userCart._id !== this.props.userCart._id) this.setState({ cart: this.props.userCart })
     }
 
@@ -87,47 +96,54 @@ class Checkout extends Component {
         this.setState({ user: userObj })
     }
 
+    postInvoice = () => {
+        if (!this.state.cart) return this.setState({ errMessage: 'El carrito está vacío' }, () => this.toggleToast())
+        if (!this.state.user.name || !this.state.user.lastName || !this.state.user.address1 || !this.state.user.zipCode ||
+            !this.state.user.city || !this.state.user.state || !this.state.user.country || !this.state.user.phone)
+            return this.setState({ errMessage: 'La dirección de envío esta incompleta, completa todos los campos con asterisco.' }, () => this.toggleToast())
 
-    /*----LOAD PRODUCTS----*/
-    // getProductDetails = () => {
-    //     this.productServices.getProductDetails(this.props.match.params.id)
-    //         .then(theProduct => this.setState({ product: theProduct }))
-    //         .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
-    //         .catch(err => console.log(err))
-    // }
+        const invoice = {
+            user: this.state.user._id,
+            name: this.state.user.name,
+            lastName: this.state.user.lastName,
+            address1: this.state.user.address1,
+            address2: this.state.user.address2,
+            zipCode: this.state.user.zipCode,
+            city: this.state.user.city,
+            state: this.state.user.state,
+            country: this.state.user.country,
+            phone: this.state.user.phone,
+            products: this.state.cart.products,
+            total: this.state.cart.total,
+        }
 
-    /*----UPDATE USER----*/
-    // updateUser = () => {
-    //     let userCopy = this.state.user
-    //     userCopy.cart = this.state.cart
-    //     this.userServices.updateUser(this.props.loggedInUser._id, this.state.user)
-    //         .then(theUser => this.setState({ user: theUser }))
-    //         .catch(err => console.log(err))
-    // }
+        this.invoiceServices.postInvoice(invoice)
+            .then(theInvoice => this.updateUserInvoice(theInvoice))
+            .then(() => this.setState({ cart: '' }, () => this.props.setTheCart(this.state.cart)))
+            .catch(err => console.log(err))
+        // .catch(err => this.setState({ errMessage: err.response.data.message }, () => this.toggleToast()))
 
+    }
 
-    /*----EDIT PRODUCT----*/
-    // updateProduct = () => {
-    //     this.productServices.updateProduct(this.props.match.params.id, this.state.product)
-    //         .then(theProduct => this.setState({ product: theProduct }))
-    //         .catch(err => console.log(err))
-    // }
+    emptyCart = () => {
+        let emptyCart = { products: [], total: 0, cartIconQuantity: 0 }
+        this.updateCart(emptyCart)
+    }
 
-    // handleSubmit = async e => {
-    //     e.preventDefault()
-    //     await this.setVariants()
-    //     this.updateProduct()
-    //     this.toggleToast()
-    // }
+    updateUserInvoice = invoice => {
+        let userCopy = { ...this.state.user }
+        console.log('INVOICE', invoice)
+        if (!userCopy.invoices) userCopy.invoices = []
+        userCopy.invoices.push(invoice._id)
+        this.userServices.updateUser(userCopy._id, userCopy)
+            .then(theUser => this.setState({ user: theUser }))
+            .catch(err => console.log(err))
+        this.emptyCart()
+        this.props.history.push(`/pedido-confirmado?pedido=${invoice._id}`)
 
-    // handleChange = e => {
-    //     let { name, value } = e.target
-    //     this.setState({
-    //         product: { ...this.state.product, [name]: value }
-    //     })
-    // }
+    }
 
-
+    toggleToast = () => this.setState({ showtoast: !this.state.showtoast })
 
     render() {
 
@@ -157,7 +173,7 @@ class Checkout extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
+                                {Array.isArray(this.props.userCart.products) && this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
                                     <TableRow key={idx}>
                                         <TableCell><img src={elm.product.images[0]} alt={elm.name} /></TableCell>
                                         <TableCell><p>{elm.productName}</p><p className="checkout-model-size">{elm.modelSize}</p></TableCell>
@@ -181,7 +197,15 @@ class Checkout extends Component {
                 </section>
                 <section>
                     <h5><strong>Forma de pago</strong></h5>
-                    <Link as="button" className="btn btn-warning btn-payment my-5" to="/#" onClick={this.props.handleClose}>Confirmar pago</Link>
+
+                    <button className="btn btn-warning btn-payment my-5" onClick={this.postInvoice}>Confirmar pago</button>
+
+
+                    <Toast onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">{this.state.errMessage}</strong>
+                        </Toast.Header>
+                    </Toast>
                 </section>
 
 

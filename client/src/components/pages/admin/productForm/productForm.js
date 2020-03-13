@@ -20,7 +20,7 @@ class ProductForm extends Component {
 
     constructor(props) {
         super(props)
-        this.ProductServices = new ProductsServices()
+        this.productsServices = new ProductsServices()
         this.filesServices = new FilesServices()
         this.state = {
             product: {
@@ -55,7 +55,7 @@ class ProductForm extends Component {
     }
 
     postProduct = () => {
-        this.ProductServices.postProduct(this.state.product)
+        this.productsServices.postProduct(this.state.product)
             .then(() => this.finishAction())
             .catch(err => console.log(err))
     }

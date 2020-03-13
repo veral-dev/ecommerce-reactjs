@@ -25,6 +25,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import Toast from 'react-bootstrap/Toast'
 
 /* ----ICONS---- */
 import IconButton from '@material-ui/core/IconButton';
@@ -67,6 +68,7 @@ class ProductDetails extends Component {
             mainImage: '',
             showtoast: false,
             showmodal: false,
+            errMessage: ''
         }
     }
 
@@ -90,7 +92,7 @@ class ProductDetails extends Component {
     }
     /*----ADD TO CART----*/
     addToCart = () => {
-
+        if (!this.state.choosedProduct.product) return this.setState({ errMessage: 'Selecciona tu medida' }, () => this.toggleToast())
         let cartCopy = { ...this.state.cart }
         if (cartCopy.total === 0) {
             cartCopy.products.push(this.state.choosedProduct)
@@ -111,7 +113,6 @@ class ProductDetails extends Component {
         cartCopy.total = 0
         cartCopy.products.forEach(elm => { actualQuantity += elm.quantity; cartCopy.total += elm.subtotal })
         cartCopy.cartIconQuantity = actualQuantity
-        // this.setState({cart: cartCopy }, () => { this.updateCart(); this.props.setTheCart(this.state.cart)})
         this.updateCart(cartCopy)
     }
 
@@ -308,7 +309,15 @@ class ProductDetails extends Component {
                                     </IconButton>
                                 </div>
                                 <Button variant="warning" className="add-cart-btn" onClick={() => this.addToCart(this.state.product._id)}>Añadir al carrito</Button>
+
+
+
                             </div>
+                            <Toast onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
+                                <Toast.Header>
+                                    <strong className="mr-auto">{this.state.errMessage}</strong>
+                                </Toast.Header>
+                            </Toast>
                         </Col>
                     </Row>
 

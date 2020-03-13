@@ -86,8 +86,9 @@ class Navigation extends Component {
                         <Hidden smDown implementation="css">
                             <Nav className="ml-auto">
                                 <Nav.Link as="div"><Link to="/coleccion">Colección</Link></Nav.Link>
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/products-list">Lista de productos</Link></Nav.Link> : null}
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/users/create-user">Crear usuario</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-productos">Lista de productos</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-usuarios">Lista de usuarios</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/usuarios/crear-usuario">Crear usuario</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link as="div"><Link to={`/cuenta/editar/${this.props.loggedInUser._id}`}>Editar mi cuenta</Link></Nav.Link> : null}
                                 {!this.props.loggedInUser ? <Nav.Link as="div"><Link to="/signup">Crear cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
@@ -123,11 +124,12 @@ class Navigation extends Component {
                                 <img src="/Relakso-Logo-BL.png" alt="Relakso ReactJS Ecommerce" />
 
                                 <Nav.Link as="div"><Link to="/coleccion" onClick={() => this.toggle("showDrawer")}>Colección</Link></Nav.Link>
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/products-list" onClick={() => this.toggle("showDrawer")}>Lista de productos</Link></Nav.Link> : null}
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/users/create-user" onClick={() => this.toggle("showDrawer")}>Crear usuario</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-productos" onClick={() => this.toggle("showDrawer")}>Lista de productos</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-usuarios" onClick={() => this.toggle("showDrawer")}>Lista de usuarios</Link></Nav.Link> : null}
+                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/usuarios/crear-usuario" onClick={() => this.toggle("showDrawer")}>Crear usuario</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link as="div"><Link to={`/cuenta/editar/${this.props.loggedInUser._id}`} onClick={() => this.toggle("showDrawer")}>Editar mi cuenta</Link></Nav.Link> : null}
                                 {!this.props.loggedInUser ? <Nav.Link as="div"><Link to="/signup" onClick={() => this.toggle("showDrawer")}>Crear cuenta</Link></Nav.Link> : null}
-                                {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
+                                {this.props.loggedInUser ? <Nav.Link onClick={() => { this.logout(); this.toggle("showDrawer") }}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Drawer>
                     </Hidden>

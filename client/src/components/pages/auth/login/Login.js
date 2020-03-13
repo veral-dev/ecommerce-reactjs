@@ -34,6 +34,7 @@ class Login extends Component {
             password: '',
             errorMessage: '',
             showError: false,
+            userCart: { products: [], total: 0, cartIconQuantity: 0 },
         }
         this.authServices = new AuthServices()
     }
@@ -44,11 +45,13 @@ class Login extends Component {
         this.setState({ [name]: value })
     }
 
+
     postUser = () => {
         this.authServices.login(this.state)
             .then(theLoggedUser => {
                 this.setState({ email: '', password: '' })
                 this.props.setTheUser(theLoggedUser)
+                theLoggedUser.cart ? this.props.fetchCart(theLoggedUser.cart) : this.props.postCart(this.state.userCart)
                 this.props.history.goBack()
             })
             .catch(err => this.setState({ errorMessage: err.response.data.message },

@@ -114,7 +114,7 @@ class CartDetails extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
+                            {Array.isArray(this.props.userCart.products) && this.props.userCart.products.length ? this.props.userCart.products.map((elm, idx) => (
                                 <TableRow key={idx}>
                                     <TableCell><img src={elm.product.images[0]} alt={elm.name} /></TableCell>
                                     <TableCell><p>{elm.productName}</p><p className="cart-model-size">{elm.modelSize}</p></TableCell>

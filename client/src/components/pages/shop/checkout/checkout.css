@@ -10,6 +10,11 @@
     margin: 0 auto;
 }
 
+.toast{
+    margin: 10px auto;
+    background-color: red;
+}
+
 .checkout-table p{
     margin-bottom: 0px;
 }

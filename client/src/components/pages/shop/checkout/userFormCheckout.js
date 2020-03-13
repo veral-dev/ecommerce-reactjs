@@ -38,7 +38,7 @@ class UserFormCheckout extends Component {
     }
 
     componentDidMount = () => {
-
+        if (this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
     }
 
     componentDidUpdate(prevProps) {
