@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 /* ----STYLE----*/
-import '../login.css'
+import '../auth.css'
 
 /* ----SERVICES----*/
 import AuthServices from '../../../../services/auth.services'
@@ -72,6 +72,7 @@ class Login extends Component {
 
             <Container maxWidth="xs">
                 <div className="paper">
+
                     <Avatar className="avatar" style={{ backgroundColor: '#fdd100' }}>
                         <LockOutlinedIcon />
                     </Avatar>
@@ -102,20 +103,14 @@ class Login extends Component {
                             Iniciar sesión
                         </Button>
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link href="#" variant="body2">¿Olvidaste la contraseña?</Link>
-                            </Grid> */}
+                            
                             <Grid item>
                                 <Link href="/signup" variant="body2">
-                                    {"¿No tienes cuenta? Crear cuenta"}
+                                    {"¿No tienes cuenta? Crear una nueva cuenta"}
                                 </Link>
                             </Grid>
                         </Grid>
-                        {/* <Snackbar open={this.showError} autoHideDuration={6000} onClose={() => this.toggle("showError")}>
-                            <Alert onClose={() => this.toggle("showError")} severity="success">
-                                This is a success message!
-                            </Alert>
-                        </Snackbar> */}
+                        
                         <Toast className="mt-3" style={{ backgroundColor: 'red' }} onClose={() => this.toggle("showError")} show={this.state.showError} delay={3000} autohide>
                             <Toast.Header>
                                 <strong className="mr-auto">{this.state.errorMessage}</strong>

@@ -9,12 +9,13 @@ import UserServices from '../../../../services/user.services'
 /* ----ROUTES----*/
 // import { Link } from 'react-router-dom'
 
-
 /* ----STYLE COMPONENTS----*/
 import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
+// import TextField from '@material-ui/core/TextField';
+// import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
 import Toast from 'react-bootstrap/Toast'
 
@@ -25,16 +26,15 @@ class UserUpdate extends Component {
         this.state = {
             user: {
                 email: '',
-                role: '',
                 name: '',
                 lastName: '',
-                street: '',
+                address1: '',
+                address2: '',
                 zipCode: '',
                 city: '',
                 state: '',
+                country: '',
                 phone: '',
-                wishlist: [],
-                orders: [],
             },
             modelPrev: [],
             showtoast: false,
@@ -43,7 +43,7 @@ class UserUpdate extends Component {
     }
 
     componentDidMount = () => {
-        this.getUserDetails()
+        if (this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
     }
     componentDidUpdate(prevProps) {
         if (prevProps.loggedInUser._id !== this.props.loggedInUser._id) this.setState({ user: this.props.loggedInUser })
@@ -69,20 +69,12 @@ class UserUpdate extends Component {
     }
 
     handleChange = e => {
-        let { name, value } = e.target
+        const { name, value } = e.target
         this.setState({
             user: { ...this.state.user, [name]: value }
-        })
+        }, () => this.props.setTheUser(this.state.user))
 
     }
-
-    // deleteVariant = idx => {
-    //     let modelCopy = [...this.state.modelPrev]
-    //     modelCopy.splice(idx, 1)
-    //     this.setState({
-    //         modelPrev: modelCopy
-    //     })
-    // }
 
     toggleToast = () => this.setState({ showtoast: !this.state.showtoast })
     toggleModal = () => this.setState({ showmodal: !this.state.showmodal })
@@ -91,125 +83,65 @@ class UserUpdate extends Component {
     render() {
 
         return (
-            <Container className="client-body my-5 px-5">
+            <Container className="client-body container-form my-2">
+                <h1>Editar cuenta</h1>
+                <Form>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Nombre</Form.Label>
+                            <Form.Control type="text" name="name" id="name" required placeholder="Nombre" value={this.state.user.name} onChange={this.handleChange} />
+                        </Form.Group>
 
-                <Grid container spacing={3}>
-                    <Grid item xs={6} sm={3}>
-                        <TextField
-                            required
-                            id="name"
-                            name="name"
-                            value={this.state.user.name}
-                            label="Nombre"
-                            fullWidth
-                            autoComplete="fname"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <TextField
-                            required
-                            id="lastName"
-                            name="lastName"
-                            value={this.state.user.lastName}
-                            label="Apellidos"
-                            fullWidth
-                            autoComplete="fname"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="email"
-                            name="email"
-                            value={this.state.user.email}
-                            label="Correo electrónico"
-                            fullWidth
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            id="address1"
-                            name="address1"
-                            value={this.state.user.address1}
-                            label="Dirección 1"
-                            fullWidth
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            id="address2"
-                            name="address2"
-                            value={this.state.user.address2}
-                            label="Dirección 2"
-                            fullWidth
-                            autoComplete="billing address-line2"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                        <TextField
-                            required
-                            id="city"
-                            name="city"
-                            value={this.state.user.city}
-                            label="Ciudad"
-                            fullWidth
-                            autoComplete="billing address-level2"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                        <TextField id="state" name="state" value={this.state.user.state} label="Provincia/Región" fullWidth onChange={this.handleChange} />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                        <TextField
-                            required
-                            id="zipCode"
-                            name="zipCode"
-                            value={this.state.user.zipCode}
-                            label="Código postal"
-                            fullWidth
-                            autoComplete="billing postal-code"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                        <TextField
-                            required
-                            id="country"
-                            name="country"
-                            value={this.state.user.country}
-                            label="País"
-                            fullWidth
-                            autoComplete="billing country"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            required
-                            id="phone"
-                            name="phone"
-                            value={this.state.user.phone}
-                            label="Teléfono"
-                            fullWidth
-                            type="tel"
-                            autoComplete="billing country"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        {/* <FormControlLabel
-                            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                            label="Usa esta dirección para la factura"
-                        /> */}
-                    </Grid>
-                    <Button onClick={this.handleSubmit} variant="outlined" className="ml-2 mt-4" size="small" startIcon={<SaveIcon />}>
+                        <Form.Group as={Col}>
+                            <Form.Label>Apellidos</Form.Label>
+                            <Form.Control type="text" name="lastName" id="lastName" required placeholder="Apellidos" value={this.state.user.lastName} onChange={this.handleChange} />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Correo electrónico</Form.Label>
+                            <Form.Control type="email" name="email" id="email" required placeholder="Correo electrónico" value={this.state.user.email} onChange={this.handleChange} />
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Teléfono</Form.Label>
+                            <Form.Control name="phone" id="phone" required placeholder="Teléfono" value={this.state.user.phone} onChange={this.handleChange} />
+                        </Form.Group>
+
+                    </Form.Row>
+                    <Form.Group>
+                        <Form.Label>Dirección</Form.Label>
+                        <Form.Control type="text" name="address1" id="address1" required placeholder="Dirección de envío" value={this.state.user.address1} onChange={this.handleChange} />
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Más información para el envío</Form.Label>
+                        <Form.Control type="text" name="address2" id="address2" required placeholder="Información adicional para el envío" value={this.state.user.address2} onChange={this.handleChange} />
+                    </Form.Group>
+
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Código postal</Form.Label>
+                            <Form.Control type="text/number" name="zipCode" id="zipCode" required placeholder="Código postal" value={this.state.user.zipCode} onChange={this.handleChange} />
+                        </Form.Group>
+
+                        <Form.Group as={Col}>
+                            <Form.Label>Provincia/Región</Form.Label>
+                            <Form.Control type="text" name="state" id="state" required placeholder="Provincia o región" value={this.state.user.state} onChange={this.handleChange} />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Ciudad</Form.Label>
+                            <Form.Control type="text" name="city" id="city" required placeholder="Ciudad" value={this.state.user.city} onChange={this.handleChange} />
+                        </Form.Group>
+
+                        <Form.Group as={Col}>
+                            <Form.Label>País</Form.Label>
+                            <Form.Control type="text" name="country" id="country" required placeholder="País" value={this.state.user.country} onChange={this.handleChange} />
+                        </Form.Group>
+                    </Form.Row>
+
+                    <Button type="submit" onClick={this.handleSubmit} variant="outlined" className="mt-4" size="small" startIcon={<SaveIcon />}>
                         Guardar dirección
                     </Button>
                     <Toast style={{ backgroundColor: "green" }} onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
@@ -217,22 +149,9 @@ class UserUpdate extends Component {
                             <strong className="mr-auto">La información ha sido modificada</strong>
                         </Toast.Header>
                     </Toast>
-                    {/* <Button className="mx-auto mt-2" variant="outline-dark">Guardar dirección</Button> */}
-                </Grid>
-
-                <form onSubmit={this.handleSubmit} autoComplete="off">
-                    <TextField className="mx-4" id="standard-basic" value={this.state.user.address1} label="Nombre" type="text" name="address1" onChange={this.handleChange} />
-                    <TextField className="mx-4" id="standard-basic" value={this.state.user.lastName} label="Apellidos" type="text" name="lastName" onChange={this.handleChange} />
-                    <TextField className="mx-4" id="standard-basic" value={this.state.user.role} label="Rol" type="text" name="role" onChange={this.handleChange} />
-                    <TextField className="mx-4" id="standard-basic" value={this.state.user.city} label="Ciudad" type="text" name="city" onChange={this.handleChange} />
-
-                </form>
-
-                {/* <Button variant="outline-success" type="submit" size="lg" block onClick={this.handleSubmit}>Modificar usuario</Button> */}
-
+                </Form>
 
             </Container>
-
 
         )
     }

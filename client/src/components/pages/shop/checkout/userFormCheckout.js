@@ -66,14 +66,6 @@ class UserFormCheckout extends Component {
         this.updateUser()
     }
 
-    // deleteVariant = idx => {
-    //     let modelCopy = [...this.state.product.model]
-    //     modelCopy.splice(idx, 1)
-    //     this.setState({
-    //         product: { ...this.state.product, model: modelCopy }
-    //     })
-    // }
-
     closeModal = () => this.setState({ showmodal: false })
     openModal = () => this.setState({ showmodal: true })
 

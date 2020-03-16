@@ -6,38 +6,68 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.MuiBadge-colorSecondary{
+  background-color: #fdd100 !important;
+}
+
+main{
+  margin: 0 auto;
+  padding-top: 55px;
+}
+
+.App a {
+  color: inherit;
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+.edit-button{
+  position: fixed;
+  right: 1rem;
+  top: 5rem;
+  z-index: 100;
+}
+.edit-text{
+  display: none;
+  text-align: center;
+}
+
+.admin-button{
+  z-index: 100;
+  background-color: #fdd100;
+  position: fixed;
+  bottom: 2vh;
+  width: 250px;
+  margin-left: 50%;
+  left: -125px;
+  text-transform: uppercase;
+}
+.adminMenu{
+  width: 250px;
+  text-align: center;
+}
+.adminMenu a{
+  color: inherit;
+}
+@media (min-width: 768px){
 main{
   margin: 0 auto;
   padding-top: 70px;
 }
 
-.MuiBadge-colorSecondary{
-  background-color: #fdd100 !important;
+.edit-button{
+    top: 15vh;
+    right: 2rem;
 }
-@media (max-width: 768px){
-h1 {
-  font-size: 1.75rem;
-}
-.mobile-button{
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  z-index: 100;
-}
-main{
-  margin: 0 auto;
-  padding-top: 55px;
+.edit-text{
+  display: block;
 }
 }
-
 @media only screen and (max-width: 992px) and (min-width: 768px){
 .container, .container-md, .container-sm {
   max-width: 850px;
 }}
-
-.App-header a {
-  color: inherit;
-}
 
 .modal{
   margin-top: 100px;

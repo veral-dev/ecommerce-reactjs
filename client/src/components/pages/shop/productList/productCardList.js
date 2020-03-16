@@ -3,14 +3,13 @@ import React from 'react'
 /* ----ROUTES----*/
 import Link from '@material-ui/core/Link';
 
-
 /* ----STYLE----*/
 import './productList.css'
 /* ----STYLE COMPONENTS----*/
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 
-export default function ProductCard({ name, images, excerpt, category, tags, model, _id, deleteProduct }) {
+export default function ProductCard({ name, images, model, _id }) {
 
     return (
 
@@ -19,7 +18,6 @@ export default function ProductCard({ name, images, excerpt, category, tags, mod
             <Card className="product-card-shop">
                 <div className="position-relative">
                     <Link href={`/productos/${_id}`}><Card.Img variant="top" src={images[0]} /></Link>
-                    {/* <p className="btn addCartList">Añadir a la cesta</p> */}
                 </div>
 
                 <Card.Body>

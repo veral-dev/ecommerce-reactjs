@@ -1,15 +1,10 @@
 import React from 'react'
 
-/* ----ROUTES----*/
-
 /* ----STYLE COMPONENTS----*/
-
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-
-/* ----ICONS----*/
 
 const ProductCard = ({ product, category }) => {
 

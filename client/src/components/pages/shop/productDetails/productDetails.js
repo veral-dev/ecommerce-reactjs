@@ -14,13 +14,11 @@ import CartServices from '../../../../services/cart.services'
 import AsideProductMain from '../aside/asideProduct'
 import AsideUpsells from '../aside/asideUpsells'
 
-
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import Breadcrumbs from '../../../ui/Breadcrumbs'
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -90,6 +88,7 @@ class ProductDetails extends Component {
             .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
             .catch(err => console.log(err))
     }
+
     /*----ADD TO CART----*/
     addToCart = () => {
         if (!this.state.choosedProduct.product) return this.setState({ errMessage: 'Selecciona tu medida' }, () => this.toggleToast())
@@ -246,16 +245,12 @@ class ProductDetails extends Component {
     }
 
 
-
-
     toggleToast = () => this.setState({ showtoast: !this.state.showtoast })
     toggleModal = () => this.setState({ showmodal: !this.state.showmodal })
 
     mainImage = id => {
 
         let imageCopy = this.state.product.images[id.idx]
-        // let idx = id.idx
-        // imagesCopy.unshift(imagesCopy.splice(idx, 1).toString())
         this.setState({
             mainImage: imageCopy
         })
@@ -266,24 +261,16 @@ class ProductDetails extends Component {
         return (
             <>
                 <Container className="client-body">
-                    {this.props.loggedInUser.role === 'admin' && <Link className="float-right mobile-button" to={`/admin/editar-producto/${this.state.product._id}`}>
-
-                        <Fab style={{ backgroundColor: '#4caf50' }} aria-label="edit">
+                    {this.props.loggedInUser.role === 'admin' && <Link className="float-right edit-button" to={`/admin/editar-producto/${this.state.product._id}`}>
+                        <Fab style={{ backgroundColor: '#fdd100' }} aria-label="edit">
                             <EditIcon />
-                        </Fab></Link>}
+                        </Fab><p className="edit-text">Editar</p></Link>}
 
                     <Row >
                         <Col sm={12} md={6} className="product-img">
                             <img src={this.state.mainImage} alt={this.state.product.name} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
                             {this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100px", height: '100px', objectFit: 'cover', padding: '5px' }} />)}
                         </Col>
-                        {/* TO-DO PREGUNTAR COMO HACER PARA QUE AL CAMBIAR LA PANTALLA CAMBIE YA QUE CREO QUE HAY QUE CAMBIAR EL ESTADO */}
-                        {/* {window.innerWidth > 768 ? (<Col sm={12} md={6} className="product-img">
-                        {this.state.product.images !== 0 ? this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100%" }} />) : 'No hay imágenes cargadas'}</Col>)
-                        : (<Col sm={12} md={6}>
-                            <img src={this.state.product.images[0]} style={{ width: "100%", height: "400px", padding: '5px', objectFit: 'cover' }} />
-                            {this.state.product.images.map((elm, idx) => <img src={elm} key={idx} alt={idx} onClick={() => this.mainImage({ idx })} style={{ width: "100px", height: '100px', objectFit: 'cover', padding: '5px' }} />)}
-                        </Col>)} */}
 
                         <Col sm={12} md={6} className="product-main">
                             <Breadcrumbs product={this.state.product.name} category={this.state.product.category} />
@@ -294,8 +281,6 @@ class ProductDetails extends Component {
                             <hr></hr>
                             {this.state.product.model.map((elm, idx) => (
                                 <Button key={idx} className="product-selection" id={elm._id} variant="outline" onClick={() => this.chooseProduct(elm._id, elm.price, elm.size)}>{elm.size}</Button>
-
-
                             ))}
 
                             <div className="addToCart d-flex my-3">
@@ -308,9 +293,8 @@ class ProductDetails extends Component {
                                         <AddCircleOutlineIcon />
                                     </IconButton>
                                 </div>
+
                                 <Button variant="warning" className="add-cart-btn" onClick={() => this.addToCart(this.state.product._id)}>Añadir al carrito</Button>
-
-
 
                             </div>
                             <Toast onClose={() => this.toggleToast()} show={this.state.showtoast} delay={10000} autohide>
@@ -318,6 +302,7 @@ class ProductDetails extends Component {
                                     <strong className="mr-auto">{this.state.errMessage}</strong>
                                 </Toast.Header>
                             </Toast>
+
                         </Col>
                     </Row>
 

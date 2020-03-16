@@ -12,7 +12,6 @@ import AuthServices from '../../services/auth.services'
 
 /* ----STYLE COMPONENTS----*/
 import Nav from 'react-bootstrap/Nav'
-// import Link from '@material-ui/core/Link';
 import Menu from '@material-ui/core/Menu';
 import Fade from '@material-ui/core/Fade';
 import Badge from '@material-ui/core/Badge';
@@ -22,7 +21,8 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 /* ----ICONS---- */
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
@@ -70,7 +70,6 @@ class Navigation extends Component {
 
         return (
             <div>
-                {/* <CssBaseline /> */}
                 <AppBar position="fixed" className="navbar-main" style={{ 'color': 'black', 'backgroundColor': 'rgba(255, 255, 255, 0.65)' }}>
                     <Toolbar className="d-flex justify-content-between">
                         <div className="menuButton">
@@ -86,19 +85,26 @@ class Navigation extends Component {
                         <Hidden smDown implementation="css">
                             <Nav className="ml-auto">
                                 <Nav.Link as="div"><Link to="/coleccion">Colección</Link></Nav.Link>
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-productos">Lista de productos</Link></Nav.Link> : null}
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-usuarios">Lista de usuarios</Link></Nav.Link> : null}
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/usuarios/crear-usuario">Crear usuario</Link></Nav.Link> : null}
-                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to={`/cuenta/editar/${this.props.loggedInUser._id}`}>Editar mi cuenta</Link></Nav.Link> : null}
                                 {!this.props.loggedInUser ? <Nav.Link as="div"><Link to="/signup">Crear cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={this.logout}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
                         </Hidden>
 
                         <div className="fitcontent-width">
-                            <IconButton aria-controls="fade-menu" aria-haspopup="false" >
-                                {this.props.loggedInUser ? <Link style={{ fontSize: '1rem' }} to={`/cuenta/editar/${this.props.loggedInUser._id}`}><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link> : <Link style={{ fontSize: '1rem' }} to="/login"><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link>}
-                            </IconButton>
+                            {this.props.loggedInUser ?
+                                <>
+                                    <OverlayTrigger placement="bottom" overlay={<Tooltip style={{ zIndex: '2000' }}>Editar Cuenta</Tooltip>}>
+                                        <IconButton aria-controls="fade-menu" aria-haspopup="false">
+                                            <Link style={{ fontSize: '1rem' }} to={`/cuenta/editar/${this.props.loggedInUser._id}`}><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link>
+                                        </IconButton>
+                                    </OverlayTrigger>{' '}
+                                </> : <>
+                                    <OverlayTrigger placement="bottom" overlay={<Tooltip style={{ zIndex: '2000' }}>Iniciar sesión/Registrarse</Tooltip>}>
+                                        <IconButton aria-controls="fade-menu" aria-haspopup="false">
+                                            <Link style={{ fontSize: '1rem' }} to="/login"><PersonOutlineOutlinedIcon style={{ color: 'black' }} /></Link>
+                                        </IconButton>
+                                    </OverlayTrigger>{' '}
+                                </>}
                             <IconButton aria-controls="fade-menu" aria-haspopup="false" onClick={this.handleMenu} >
                                 <Badge color="secondary" badgeContent={this.state.cartIcon}>
                                     <ShoppingCartOutlinedIcon style={{ color: 'black' }} />
@@ -109,7 +115,6 @@ class Navigation extends Component {
                 </AppBar>
 
                 <nav >
-                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                     <Hidden smUp implementation="css">
                         <Drawer
                             variant="temporary"
@@ -124,10 +129,6 @@ class Navigation extends Component {
                                 <img src="/Relakso-Logo-BL.png" alt="Relakso ReactJS Ecommerce" />
 
                                 <Nav.Link as="div"><Link to="/coleccion" onClick={() => this.toggle("showDrawer")}>Colección</Link></Nav.Link>
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-productos" onClick={() => this.toggle("showDrawer")}>Lista de productos</Link></Nav.Link> : null}
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/lista-usuarios" onClick={() => this.toggle("showDrawer")}>Lista de usuarios</Link></Nav.Link> : null}
-                                {this.props.loggedInUser.role === 'admin' ? <Nav.Link as="div"><Link to="/admin/usuarios/crear-usuario" onClick={() => this.toggle("showDrawer")}>Crear usuario</Link></Nav.Link> : null}
-                                {this.props.loggedInUser ? <Nav.Link as="div"><Link to={`/cuenta/editar/${this.props.loggedInUser._id}`} onClick={() => this.toggle("showDrawer")}>Editar mi cuenta</Link></Nav.Link> : null}
                                 {!this.props.loggedInUser ? <Nav.Link as="div"><Link to="/signup" onClick={() => this.toggle("showDrawer")}>Crear cuenta</Link></Nav.Link> : null}
                                 {this.props.loggedInUser ? <Nav.Link onClick={() => { this.logout(); this.toggle("showDrawer") }}>Cerrar sesión</Nav.Link> : null}
                             </Nav>
@@ -142,7 +143,6 @@ class Navigation extends Component {
                     open={open}
                     onClose={this.handleClose}
                     PaperProps={{ style: { transform: 'translateY(20%)' } }} >
-
                     <CartDetails loggedInUser={this.props.loggedInUser} handleClose={this.handleClose} setTheCart={this.props.setTheCart} userCart={this.props.userCart} />
                 </Menu>
             </div>

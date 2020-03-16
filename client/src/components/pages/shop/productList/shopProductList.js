@@ -15,15 +15,13 @@ import ProductCard from './productCardList'
 // import Table from 'react-bootstrap/Table'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Spinner from 'react-bootstrap/Spinner'
 
 class ShopProductsList extends Component {
-
 
     constructor(props) {
         super(props)
@@ -71,19 +69,14 @@ class ShopProductsList extends Component {
             <div className="client-body">
                 <Container className="pb-5">
 
-                    <Row className="mb-3">
-                        <Col sm={8}>
-                            <h1>Colección</h1>
-                        </Col>
-                        <Col sm={4}>
+                    <h1>Colección</h1>
 
-                            {this.props.loggedInUser.role === 'admin' && <Link className="float-right mobile-button" to="/admin/products/create">
+                    {this.props.loggedInUser.role === 'admin' && <Link className="float-right edit-button" to="/admin/lista-productos">
 
-                                <Fab style={{ backgroundColor: '#4caf50' }} aria-label="add">
-                                    <AddIcon />
-                                </Fab></Link>}
-                        </Col>
-                    </Row>
+                        <Fab style={{ backgroundColor: '#fdd100' }} aria-label="edit">
+                            <EditIcon />
+                        </Fab><p className="edit-text">Editar</p></Link>}
+
                     <input className="form-control mr-sm-2 mb-2" value={this.productsSearched} type="search" name="search" placeholder="Buscar" aria-label="Search"
                         id="index-input" onChange={this.handleChangeSearch} />
 

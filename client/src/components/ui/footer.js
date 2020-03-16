@@ -1,13 +1,14 @@
 import React from 'react'
 
+/* ----STYLING----*/
 import './footer.css'
+
 /* ----ROUTES----*/
 import { Link } from 'react-router-dom'
 
 /* ----STYLE COMPONENTS----*/
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-/* ----ICONS----*/
 
 const Footer = () => {
 

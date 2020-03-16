@@ -9,10 +9,10 @@ import InvoiceServices from '../../../../services/invoice.services'
 
 
 /* ----STYLE COMPONENTS----*/
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+// import Container from 'react-bootstrap/Container'
+// import Row from 'react-bootstrap/Row'
+// import Col from 'react-bootstrap/Col'
+// import Button from 'react-bootstrap/Button'
 
 
 class InvoiceDetails extends Component {
@@ -63,3 +63,4 @@ class InvoiceDetails extends Component {
     }
 }
 export default InvoiceDetails
+
