@@ -26,6 +26,7 @@ class InvoiceDetails extends Component {
         this.state = {
 
             user: {},
+            invoice: { products: [] },
 
             showtoast: false,
             showmodal: false,
@@ -34,7 +35,7 @@ class InvoiceDetails extends Component {
 
 
     componentDidMount = () => {
-        // this.getInvoiceDetails()
+        this.getInvoiceDetails()
     }
 
     componentDidUpdate(prevProps) {
@@ -44,19 +45,27 @@ class InvoiceDetails extends Component {
 
 
     /*----LOAD PRODUCTS----*/
-    // getInvoiceDetails = () => {
-    //     console.log(this.props.location.search)
-    //     this.invoiceServices.getInvoiceDetails(this.props.location.search)
-    //     //     .then(theProduct => this.setState({ product: theProduct, mainImage: theProduct.images[0], pricePrev: theProduct.model[0].price }))
-    //     //     .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
-    //     //     .catch(err => console.log(err))
-    // }
+    getInvoiceDetails = () => {
+        this.invoiceServices.getInvoiceDetails(this.props.location.search)
+            .then(theInvoice => this.setState({ invoice: theInvoice }))
+            .catch(err => console.log(err))
+
+        // this.invoiceServices.getInvoiceDetails(this.props.location.search)
+        //     .then(theInvoice => this.setState({ invoice: theProduct, mainImage: theProduct.images[0], pricePrev: theProduct.model[0].price }))
+        //     .then(() => this.setState({ modelPrev: [...this.state.product.model] }))
+        //     .catch(err => console.log(err))
+    }
 
 
     render() {
         return (
             <>
                 <h1>Pedido completado</h1>
+                {this.state.invoice.name}
+                {this.state.invoice.lastName}
+                {this.state.invoice.phone}
+
+                {this.state.invoice.products.map((elm, idx) => <p>{elm.productName}</p>)}
             </>
         )
 

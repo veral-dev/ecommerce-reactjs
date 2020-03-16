@@ -10,7 +10,7 @@ export default class Services {
     }
 
     getAllInvoices = () => this.service.get('/getAllInvoices').then(response => response.data)
-    getInvoiceDetails = id => this.service.get(`/getOneInvoice?order=${id}`).then(response => response.data)
+    getInvoiceDetails = query => this.service.get(`/getOneInvoice${query}`).then(response => response.data)
     postInvoice = invoice => this.service.post(`/new`, invoice).then(response => response.data)
     updateInvoice = (id, invoice) => this.service.put(`/update/${id}`, invoice).then(response => response.data)
     deleteInvoice = (id) => this.service.delete(`/delete/${id}`).then(response => response.data)

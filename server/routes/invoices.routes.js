@@ -2,8 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Invoice = require('../models/Invoice.model')
-const User = require('../models/User.model')
-const Product = require('../models/Cart.model')
+const Product = require('../models/Product.model')
 
 
 router.get('/getAllCarts', (req, res, next) => {
@@ -14,18 +13,16 @@ router.get('/getAllCarts', (req, res, next) => {
 
 router.get('/getOneInvoice', (req, res, next) => {
     console.log('AQUí', req.query)
-
-
-    // Invoice.findById(req.query.order)
-    // .populate({
-    //     path: 'products.product',
-    //     populate: {
-    //         path: 'product',
-    //         model: 'Product'
-    //     }
-    // })
-    // .then(theInvoice => res.json(theInvoice))
-    // .catch(err => next(err))
+    Invoice.findById(req.query.pedido)
+        .populate({
+            path: 'products.product',
+            populate: {
+                path: 'product',
+                model: 'Product'
+            }
+        })
+        .then(theInvoice => res.json(theInvoice))
+        .catch(err => next(err))
 })
 
 router.post('/new', (req, res, next) => {
@@ -37,7 +34,7 @@ router.post('/new', (req, res, next) => {
 router.post('/search', (req, res, next) => {
     const invoiceSearch = req.body.search
     Invoice.find({
-        "name": {
+        "lastName": {
             $regex: `.*${invoiceSearch}.*`,
             $options: 'i'
         }
