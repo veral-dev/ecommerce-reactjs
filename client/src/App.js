@@ -56,7 +56,7 @@ class App extends Component {
 
   }
 
-  componentDidUpdate = (prevProps, prevState) => console.log('DidUpdate App', this.state)
+  // componentDidUpdate = (prevProps, prevState) => console.log('DidUpdate App', this.state)
   componentDidMount = () => this.fetchUser()
 
   setTheUser = userObj => this.setState({ loggedInUser: userObj })
