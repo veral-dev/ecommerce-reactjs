@@ -2,7 +2,7 @@
 
 _Bienvenido! Este proyecto basa mi experiencia en el mundo del eCommerce con mis conocimientos técnicos en Single Page Application sobre React JS_
 
-## Las técnolgías usadas 🚀
+## Las técnologías usadas 🚀
 * Javascript
 * Mongo DB
 * Express JS
@@ -34,5 +34,5 @@ _Toda la lógica es completamente propia y desde 0_
 
 _Todas las imágenes son usadas para uso educacional
 
-## Gracias por ver mi aplicación, no dues en contactar conmigo si tienes dudas 🤓.
+## Gracias por ver mi aplicación, no dudes en contactar conmigo si tienes dudas 🤓.
 
