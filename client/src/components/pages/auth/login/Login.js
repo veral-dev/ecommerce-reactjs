@@ -7,10 +7,6 @@ import '../auth.css'
 import AuthServices from '../../../../services/auth.services'
 
 /* ----STYLE COMPONENTS----*/
-// import Form from 'react-bootstrap/Form'
-// import Button from 'react-bootstrap/Button'
-// import Container from 'react-bootstrap/Container'
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';

@@ -42,7 +42,17 @@ class Checkout extends Component {
 
 
         this.state = {
-            user: {},
+            user: {
+                name: '',
+                lastName: '',
+                address1: '',
+                address2: '',
+                zipCode: '',
+                city: '',
+                state: '',
+                country: '',
+                phone: '',
+            },
             cart: {},
             errMessage: '',
             choosedProduct: { product: '', model: '', quantity: 1 },

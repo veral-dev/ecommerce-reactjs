@@ -46,12 +46,6 @@ class ShopProductsList extends Component {
             .catch(err => console.log(err))
     }
 
-    searchProduct = (value) => {
-        this.productServices.searchProduct(value)
-            .then(allProducts => this.setState({ products: allProducts }))
-            .catch(err => console.log(err))
-    }
-
     handleChangeSearch = e => {
         let { value } = e.target
         this.searchProduct(value)

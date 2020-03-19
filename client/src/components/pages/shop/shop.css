@@ -39,6 +39,12 @@ margin-right: 1rem;
     max-width: 600px;
     padding-top: 5vh;
 }
+address ul{
+  padding: 0;
+}
+address li{
+  list-style: none;
+}
 @media screen and (max-width: 768px){
 .MuiTableCell-root{
   padding: 5px !important;

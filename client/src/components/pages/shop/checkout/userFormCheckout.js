@@ -174,15 +174,11 @@ class UserFormCheckout extends Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        {/* <FormControlLabel
-                            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                            label="Usa esta dirección para la factura"
-                        /> */}
+
                     </Grid>
                     <Button onClick={this.handleSubmit} variant="outlined" className="ml-2 mt-4" size="small" startIcon={<SaveIcon />}>
                         Guardar dirección
                     </Button>
-                    {/* <Button className="mx-auto mt-2" variant="outline-dark">Guardar dirección</Button> */}
                 </Grid>
 
             </>
